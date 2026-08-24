@@ -11,9 +11,9 @@
         <label>Total Compra:</label><input type="number" step="0.01" name="total" required><br>
         
         <h3>Ítems Comprados</h3>
-        <label>Computador ID:</label><input type="number" name="productos[0][computador_id]">
-        <label>Cantidad:</label><input type="number" name="productos[0][cantidad]">
-        <label>Costo Unitario:</label><input type="number" step="0.01" name="productos[0][precio]"><br><br>
+        <label>Computador ID:</label><input type="number" name="productos[0][computador_id]" required>
+        <label>Cantidad:</label><input type="number" name="productos[0][cantidad]" required>
+        <label>Costo Unitario:</label><input type="number" step="0.01" name="productos[0][precio]" required><br><br>
 
         <button type="submit">Registrar Compra y Sumar Stock</button>
     </form>

@@ -1,5 +1,5 @@
 <?php
-require_once '../app/models/Parametrica.php';
+require_once __DIR__ . '/../models/Parametrica.php';
 
 class CatalogoController {
     private $model;
@@ -12,7 +12,7 @@ class CatalogoController {
     public function index() {
         $tabla = $_GET['tabla'] ?? 'marca';
         $datos = $this->model->getAllFromTable($tabla);
-        require_once '../app/views/parametros/index.php';
+        require_once __DIR__ . '/../views/parametros/index.php';
     }
 
     public function guardar() {
@@ -21,6 +21,7 @@ class CatalogoController {
             $data = ['nombre' => $_POST['nombre']];
             $this->model->insertIntoTable($tabla, $data);
             header('Location: index.php?controller=catalogo&action=index&tabla=' . $tabla);
+            exit;
         }
     }
 }

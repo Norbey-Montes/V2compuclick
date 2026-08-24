@@ -1,5 +1,5 @@
 <?php
-require_once '../app/models/Persona.php';
+require_once __DIR__ . '/../models/Persona.php';
 
 class PersonaController {
     private $model;
@@ -10,11 +10,11 @@ class PersonaController {
 
     public function index() {
         $personas = $this->model->getAll();
-        require_once '../app/views/personas/index.php';
+        require_once __DIR__ . '/../views/personas/index.php';
     }
 
     public function crear() {
-        require_once '../app/views/personas/crear.php';
+        require_once __DIR__ . '/../views/personas/crear.php';
     }
 
     public function guardar() {
@@ -32,12 +32,17 @@ class PersonaController {
             ];
             $this->model->insert($data);
             header('Location: index.php?controller=persona&action=index');
+            exit;
         }
     }
 
     public function editar($id) {
         $persona = $this->model->getById($id);
-        require_once '../app/views/personas/editar.php';
+        if (!$persona) {
+            http_response_code(404);
+            exit('Persona no encontrada.');
+        }
+        require_once __DIR__ . '/../views/personas/editar.php';
     }
 
     public function actualizar($id) {
@@ -55,6 +60,7 @@ class PersonaController {
             ];
             $this->model->update($id, $data);
             header('Location: index.php?controller=persona&action=index');
+            exit;
         }
     }
 }

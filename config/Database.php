@@ -1,45 +1,42 @@
 <?php
-namespace Config;
-
-use PDO;
-use PDOException;
+declare(strict_types=1);
 
 class Database {
-    private static $instance = null;
-    private $connection;
+    private $host;
+    private $port;
+    private $dbname;
+    private $username;
+    private $password;
 
-    private $host = 'localhost';
-    private $db_name = 'v2compuclick';
-    private $username = 'root';
-    private $password = '';
-    private $charset = 'utf8mb4';
+    public function __construct() {
+        // Cargar las variables del archivo .env ubicado en la raíz del proyecto
+        $env = parse_ini_file(__DIR__ . '/../.env');
 
-    private function __construct() {
-        $dsn = "mysql:host={$this->host};dbname={$this->db_name};charset={$this->charset}";
-        $options = [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES   => false,
-        ];
-
-        try {
-            $this->connection = new PDO($dsn, $this->username, $this->password, $options);
-            // Mensaje de éxito que pediste
-            echo "Conexión exitosa CompuClick";
-        } catch (PDOException $e) {
-            die("Error de conexión: " . $e->getMessage());
-        }
+        $this->host = $env['DB_HOST'];
+        $this->port = $env['DB_PORT'];
+        $this->dbname = $env['DB_NAME'];
+        $this->username = $env['DB_USER'];
+        $this->password = $env['DB_PASSWORD'];
     }
 
-    public static function getInstance() {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-        return self::$instance;
+    public function conectar() {
+        return new PDO(
+            "mysql:host={$this->host};port={$this->port};dbname={$this->dbname};charset=utf8mb4",
+            $this->username,
+            $this->password,
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+            ]
+        );
+    }
+
+    public function connect() {
+        return $this->conectar();
     }
 
     public function getConnection() {
-        return $this->connection;
+        return $this->conectar();
     }
 }
 ?>

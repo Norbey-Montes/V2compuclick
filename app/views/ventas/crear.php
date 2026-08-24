@@ -13,9 +13,9 @@
         
         <h3>Ítems de Venta (Simulación de estructura de productos)</h3>
         <p><i>(Ajusta los inputs según la maquetación de tu carrito o formulario dinámico)</i></p>
-        <label>Computador ID:</label><input type="number" name="productos[0][computador_id]">
-        <label>Cantidad:</label><input type="number" name="productos[0][cantidad]">
-        <label>Precio Unitario:</label><input type="number" step="0.01" name="productos[0][precio]"><br><br>
+        <label>Computador ID:</label><input type="number" name="productos[0][computador_id]" required>
+        <label>Cantidad:</label><input type="number" name="productos[0][cantidad]" required>
+        <label>Precio Unitario:</label><input type="number" step="0.01" name="productos[0][precio]" required><br><br>
 
         <button type="submit">Finalizar Venta</button>
     </form>

@@ -1,5 +1,5 @@
 <?php
-require_once '../app/models/Proveedor.php';
+require_once __DIR__ . '/../models/Proveedor.php';
 
 class ProveedorController {
     private $model;
@@ -10,11 +10,11 @@ class ProveedorController {
 
     public function index() {
         $proveedores = $this->model->getAllProveedores();
-        require_once '../app/views/proveedores/index.php';
+        require_once __DIR__ . '/../views/proveedores/index.php';
     }
 
     public function crear() {
-        require_once '../app/views/proveedores/crear.php';
+        require_once __DIR__ . '/../views/proveedores/crear.php';
     }
 
     public function guardar() {
@@ -25,12 +25,17 @@ class ProveedorController {
             ];
             $this->model->insert($data);
             header('Location: index.php?controller=proveedor&action=index');
+            exit;
         }
     }
 
     public function editar($id) {
         $proveedor = $this->model->getById($id);
-        require_once '../app/views/proveedores/editar.php';
+        if (!$proveedor) {
+            http_response_code(404);
+            exit('Proveedor no encontrado.');
+        }
+        require_once __DIR__ . '/../views/proveedores/editar.php';
     }
 
     public function actualizar($id) {
@@ -41,6 +46,7 @@ class ProveedorController {
             ];
             $this->model->update($id, $data);
             header('Location: index.php?controller=proveedor&action=index');
+            exit;
         }
     }
 }

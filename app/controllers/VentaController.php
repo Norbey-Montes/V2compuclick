@@ -1,5 +1,5 @@
 <?php
-require_once '../app/models/Venta.php';
+require_once __DIR__ . '/../models/Venta.php';
 
 class VentaController {
     private $model;
@@ -10,15 +10,20 @@ class VentaController {
 
     public function index() {
         $ventas = $this->model->getAllVentas();
-        require_once '../app/views/ventas/index.php';
+        require_once __DIR__ . '/../views/ventas/index.php';
     }
 
     public function crear() {
-        require_once '../app/views/ventas/crear.php';
+        require_once __DIR__ . '/../views/ventas/crear.php';
     }
 
     public function guardar() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (empty($_POST['productos']) || !is_array($_POST['productos'])) {
+                http_response_code(400);
+                exit('Debe agregar al menos un producto a la venta.');
+            }
+
             $cabecera = [
                 'cliente_id' => $_POST['cliente_id'],
                 'tipopago_id' => $_POST['tipopago_id'],
@@ -29,13 +34,18 @@ class VentaController {
             
             $this->model->registrarVenta($cabecera, $detalles);
             header('Location: index.php?controller=venta&action=index');
+            exit;
         }
     }
 
     public function ver($id) {
         $venta = $this->model->getVentaById($id);
+        if (!$venta) {
+            http_response_code(404);
+            exit('Venta no encontrada.');
+        }
         $detalles = $this->model->getDescripVenta($id);
-        require_once '../app/views/ventas/ver.php';
+        require_once __DIR__ . '/../views/ventas/ver.php';
     }
 }
 ?>

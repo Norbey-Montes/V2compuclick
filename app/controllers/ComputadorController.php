@@ -1,5 +1,5 @@
 <?php
-require_once '../app/models/Computador.php';
+require_once __DIR__ . '/../models/Computador.php';
 
 class ComputadorController {
     private $model;
@@ -10,11 +10,11 @@ class ComputadorController {
 
     public function index() {
         $computadores = $this->model->getAllComputadores();
-        require_once '../app/views/computadores/index.php';
+        require_once __DIR__ . '/../views/computadores/index.php';
     }
 
     public function crear() {
-        require_once '../app/views/computadores/crear.php';
+        require_once __DIR__ . '/../views/computadores/crear.php';
     }
 
     public function guardar() {
@@ -30,12 +30,17 @@ class ComputadorController {
             ];
             $this->model->insert($data);
             header('Location: index.php?controller=computador&action=index');
+            exit;
         }
     }
 
     public function editar($id) {
         $computador = $this->model->getById($id);
-        require_once '../app/views/computadores/editar.php';
+        if (!$computador) {
+            http_response_code(404);
+            exit('Computador no encontrado.');
+        }
+        require_once __DIR__ . '/../views/computadores/editar.php';
     }
 
     public function actualizar($id) {
@@ -51,6 +56,7 @@ class ComputadorController {
             ];
             $this->model->update($id, $data);
             header('Location: index.php?controller=computador&action=index');
+            exit;
         }
     }
 }

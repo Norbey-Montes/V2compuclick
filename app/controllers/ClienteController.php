@@ -1,5 +1,5 @@
 <?php
-require_once '../app/models/Cliente.php';
+require_once __DIR__ . '/../models/Cliente.php';
 
 class ClienteController {
     private $model;
@@ -10,11 +10,11 @@ class ClienteController {
 
     public function index() {
         $clientes = $this->model->getAllClientes();
-        require_once '../app/views/clientes/index.php';
+        require_once __DIR__ . '/../views/clientes/index.php';
     }
 
     public function crear() {
-        require_once '../app/views/clientes/crear.php';
+        require_once __DIR__ . '/../views/clientes/crear.php';
     }
 
     public function guardar() {
@@ -24,12 +24,17 @@ class ClienteController {
             ];
             $this->model->insert($data);
             header('Location: index.php?controller=cliente&action=index');
+            exit;
         }
     }
 
     public function editar($id) {
         $cliente = $this->model->getById($id);
-        require_once '../app/views/clientes/editar.php';
+        if (!$cliente) {
+            http_response_code(404);
+            exit('Cliente no encontrado.');
+        }
+        require_once __DIR__ . '/../views/clientes/editar.php';
     }
 
     public function actualizar($id) {
@@ -39,6 +44,7 @@ class ClienteController {
             ];
             $this->model->update($id, $data);
             header('Location: index.php?controller=cliente&action=index');
+            exit;
         }
     }
 }

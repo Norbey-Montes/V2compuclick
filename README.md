@@ -47,3 +47,16 @@ Base de Datos: MySQL (XAMPP / phpMyAdmin)
 Conexión: PDO con patrón Singleton
 
 Arquitectura: Modelo-Vista-Controlador (MVC)
+
+## Aprendizajes del día
+
+Durante esta sesión se implementaron las siguientes mejoras en la arquitectura MVC del proyecto **V2compuclick**:
+
+1. **Gestión de Bases de Datos (MySQL / phpMyAdmin):**
+   * Creación y manipulación de tablas relacionales con restricciones de clave foránea (`FOREIGN KEY`).
+   * Alteración de esquemas de tablas mediante `ALTER TABLE` para reestructurar campos (`preciocompra` y `precioventa`).
+
+2. **Backend PHP (Patrón MVC):**
+   * **Modelo (`Computador.php`):** Implementación de consultas SQL asociativas (`JOIN`) para integrar la información de marcas y preparación de sentencias seguras (`PDO`).
+   * **Controlador (`ComputadorController.php`):** Manejo de flujo de datos y control de excepciones mediante bloques `try-catch`.
+   * **Vista (`index.php`):** Renderizado dinámico de tablas HTML limpias, aplicando la separación de responsabilidades al ocultar datos internos como claves foráneas o stock.

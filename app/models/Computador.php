@@ -1,40 +1,56 @@
 <?php
+
 require_once __DIR__ . '/../../config/Database.php';
 
-class Computador {
-    private $db;
+class Computador
+{
+    private $connection;
 
-    public function __construct() {
-        $this->db = (new Database())->connect();
+    public function __construct()
+    {
+        try {
+            $database = new Database();
+            $this->connection = $database->connect();
+        } catch (PDOException $e) {
+        }
     }
 
-    public function getAllComputadores() {
-        $stmt = $this->db->query("SELECT comp.*, m.nombre as marca FROM computador comp 
-                                  JOIN marca m ON comp.marca_id = m.id");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function getAll()
+    {
+        try {
+            $sql = "SELECT 
+                        comp.id,
+                        comp.modelo, 
+                        comp.procesador, 
+                        comp.ram, 
+                        comp.almacenamiento, 
+                        comp.preciocompra,
+                        comp.precioventa,
+                        m.nombre AS marca
+                    FROM computador comp  
+                    LEFT JOIN marca m ON comp.marca_id = m.id";
+
+            $consulta = $this->connection->query($sql);
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return []; 
+        }
     }
 
-    public function getById($id) {
-        $stmt = $this->db->prepare("SELECT * FROM computador WHERE id = ?");
-        $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+    public function getById($id)
+    {
+        try {
+            $sql = "SELECT id, modelo, procesador, ram, almacenamiento, preciocompra, precioventa 
+                    FROM computador 
+                    WHERE id = :id";
 
-    public function insert($data) {
-        $stmt = $this->db->prepare("INSERT INTO computador (marca_id, modelo, procesador, ram, almacenamiento, precio, stock) 
-                                  VALUES (?, ?, ?, ?, ?, ?, ?)");
-        return $stmt->execute([
-            $data['marca_id'], $data['modelo'], $data['procesador'], 
-            $data['ram'], $data['almacenamiento'], $data['precio'], $data['stock']
-        ]);
-    }
+            $consulta = $this->connection->prepare($sql);
+            $consulta->bindParam(':id', $id, PDO::PARAM_INT);
+            $consulta->execute();
 
-    public function update($id, $data) {
-        $stmt = $this->db->prepare("UPDATE computador SET marca_id=?, modelo=?, procesador=?, ram=?, almacenamiento=?, precio=?, stock=? WHERE id=?");
-        return $stmt->execute([
-            $data['marca_id'], $data['modelo'], $data['procesador'], 
-            $data['ram'], $data['almacenamiento'], $data['precio'], $data['stock'], $id
-        ]);
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
     }
 }
-?>

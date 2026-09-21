@@ -2,35 +2,77 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Listado de Clientes - V2compuclick</title>
+    <title>Inventario de Computadores</title>
 </head>
 <body>
-    <h1>Gestión de Clientes</h1>
-    <a href="index.php?controller=cliente&action=crear">Nuevo Cliente</a>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID Cliente</th>
-                <th>Documento</th>
-                <th>Nombre Completo</th>
-                <th>Teléfono</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($clientes as $c): ?>
-            <tr>
-                <td><?= $c['cliente_id'] ?></td>
-                <td><?= $c['documento'] ?></td>
-                <td><?= $c['nombres'] . ' ' . $c['apellidos'] ?></td>
-                <td><?= $c['telefono'] ?></td>
-                <td>
-                    <a href="index.php?controller=cliente&action=editar&id=<?= $c['cliente_id'] ?>">Editar</a>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <br><a href="index.php">Volver al inicio</a>
+
+    <h1>Listado Productos</h1>
+
+    <?php if (!empty($computadores)) { ?>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre (Marca)</th>
+                    <th>Modelo</th>
+                    <th>Procesador</th>
+                    <th>RAM</th>
+                    <th>Almacenamiento</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($computadores as $comp): ?>
+                <tr>
+                    <td><?= $comp['id'] ?></td>
+                    <td><?= $comp['marca'] ?? 'Sin Marca' ?></td>
+                    <td><?= $comp['modelo'] ?></td>
+                    <td><?= $comp['procesador'] ?></td>
+                    <td><?= $comp['ram'] ?></td>
+                    <td><?= $comp['almacenamiento'] ?></td>
+                    <td>$<?= number_format($comp['precio'], 2) ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php } else { ?>
+        <p>No hay productos para mostrar.</p>
+    <?php } ?>
+
+    <br><br>
+
+    <h1>Producto Consultado (ID: 5)</h1>
+
+    <?php if (!empty($computadorConsultado)) { ?>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ID Marca</th>
+                    <th>Modelo</th>
+                    <th>Procesador</th>
+                    <th>RAM</th>
+                    <th>Almacenamiento</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($computadorConsultado as $comp): ?>
+                <tr>
+                    <td><?= $comp['id'] ?></td>
+                    <td><?= $comp['marca_id'] ?></td>
+                    <td><?= $comp['modelo'] ?></td>
+                    <td><?= $comp['procesador'] ?></td>
+                    <td><?= $comp['ram'] ?></td>
+                    <td><?= $comp['almacenamiento'] ?></td>
+                    <td>$<?= number_format($comp['precio'], 2) ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php } else { ?>
+        <p>No hay información de producto consultado para mostrar.</p>
+    <?php } ?>
+
 </body>
 </html>

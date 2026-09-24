@@ -1,33 +1,38 @@
 <?php
+
 require_once __DIR__ . '/../../config/Database.php';
 
-class Cliente {
-    private $db;
+class Cliente
+{
+    private $connection;
 
-    public function __construct() {
-        $this->db = (new Database())->connect();
+    public function __construct()
+    {
+        try {
+            $database = new Database();
+            $this->connection = $database->connect();
+        } catch (PDOException $e) {
+            $this->connection = null;
+        }
     }
 
-    public function getAllClientes() {
-        $stmt = $this->db->query("SELECT cl.id as cliente_id, p.* FROM clientes cl 
-                                  JOIN persona p ON cl.persona_id = p.id");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    public function getAll()
+    {
+        try {
+            $sql = "SELECT 
+                        c.id AS cliente_id,
+                        CONCAT(p.nombres, ' ', p.apellidos) AS nombre_completo,
+                        p.documento,
+                        p.telefono,
+                        p.email,
+                        p.direccion
+                    FROM clientes c
+                    INNER JOIN persona p ON c.persona_id = p.id";
 
-    public function getById($id) {
-        $stmt = $this->db->prepare("SELECT * FROM clientes WHERE id = ?");
-        $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    public function insert($data) {
-        $stmt = $this->db->prepare("INSERT INTO clientes (persona_id) VALUES (?)");
-        return $stmt->execute([$data['persona_id']]);
-    }
-
-    public function update($id, $data) {
-        $stmt = $this->db->prepare("UPDATE clientes SET persona_id = ? WHERE id = ?");
-        return $stmt->execute([$data['persona_id'], $id]);
+            $consulta = $this->connection->query($sql);
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
     }
 }
-?>

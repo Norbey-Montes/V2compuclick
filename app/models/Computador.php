@@ -26,9 +26,11 @@ class Computador
                         comp.almacenamiento, 
                         comp.preciocompra,
                         comp.precioventa,
-                        m.nombre AS marca
+                        m.nombre AS marca,
+                        prov.empresa AS proveedor
                     FROM computador comp  
-                    LEFT JOIN marca m ON comp.marca_id = m.id";
+                    LEFT JOIN marca m ON comp.marca_id = m.id
+                    LEFT JOIN proveedor prov ON comp.proveedor_id = prov.id";
 
             $consulta = $this->connection->query($sql);
             return $consulta->fetchAll(PDO::FETCH_ASSOC);

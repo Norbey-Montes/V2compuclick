@@ -2,35 +2,36 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Listado de Proveedores - V2compuclick</title>
+    <title>Listado de Proveedores</title>
 </head>
 <body>
-    <h1>Gestión de Proveedores</h1>
-    <a href="index.php?controller=proveedor&action=crear">Nuevo Proveedor</a>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID Proveedor</th>
-                <th>Empresa</th>
-                <th>Representante</th>
-                <th>Teléfono</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($proveedores as $pr): ?>
-            <tr>
-                <td><?= $pr['proveedor_id'] ?></td>
-                <td><?= $pr['empresa'] ?></td>
-                <td><?= $pr['nombres'] . ' ' . $pr['apellidos'] ?></td>
-                <td><?= $pr['telefono'] ?></td>
-                <td>
-                    <a href="index.php?controller=proveedor&action=editar&id=<?= $pr['proveedor_id'] ?>">Editar</a>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <br><a href="index.php">Volver al inicio</a>
+
+    <h1>Listado Proveedores</h1>
+
+    <?php if (!empty($proveedores)) { ?>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Empresa</th>
+                    <th>Representante</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($proveedores as $prov): ?>
+                <tr>
+                    <td><?= $prov['proveedor_id'] ?></td>
+                    <td><?= $prov['empresa'] ?></td>
+                    <td><?= $prov['representante'] ?? 'Sin Representante' ?></td>
+                    <td><?= $prov['telefono'] ?? 'Sin Teléfono' ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php } else { ?>
+        <p>No hay proveedores para mostrar.</p>
+    <?php } ?>
+
 </body>
 </html>

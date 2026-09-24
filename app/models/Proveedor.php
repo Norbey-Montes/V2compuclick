@@ -1,33 +1,36 @@
 <?php
+
 require_once __DIR__ . '/../../config/Database.php';
 
-class Proveedor {
-    private $db;
+class Proveedor
+{
+    private $connection;
 
-    public function __construct() {
-        $this->db = (new Database())->connect();
+    public function __construct()
+    {
+        try {
+            $database = new Database();
+            $this->connection = $database->connect();
+        } catch (PDOException $e) {
+            $this->connection = null;
+        }
     }
 
-    public function getAllProveedores() {
-        $stmt = $this->db->query("SELECT pr.id as proveedor_id, pr.empresa, p.* FROM proveedor pr 
-                                  JOIN persona p ON pr.persona_id = p.id");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    public function getAll()
+    {
+        try {
+            $sql = "SELECT 
+                        prov.id AS proveedor_id,
+                        prov.empresa,
+                        CONCAT(p.nombres, ' ', p.apellidos) AS representante,
+                        p.telefono
+                    FROM proveedor prov
+                    LEFT JOIN persona p ON prov.persona_id = p.id";
 
-    public function getById($id) {
-        $stmt = $this->db->prepare("SELECT * FROM proveedor WHERE id = ?");
-        $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    public function insert($data) {
-        $stmt = $this->db->prepare("INSERT INTO proveedor (persona_id, empresa) VALUES (?, ?)");
-        return $stmt->execute([$data['persona_id'], $data['empresa']]);
-    }
-
-    public function update($id, $data) {
-        $stmt = $this->db->prepare("UPDATE proveedor SET persona_id = ?, empresa = ? WHERE id = ?");
-        return $stmt->execute([$data['persona_id'], $data['empresa'], $id]);
+            $consulta = $this->connection->query($sql);
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
     }
 }
-?>

@@ -21,4 +21,8 @@ class ComputadorController {
 
         require_once __DIR__ . '/../views/computadores/index.php';
     }
+
+    public function crear() {
+        require_once __DIR__ . '/../views/computadores/crear.php';
+    }
 }

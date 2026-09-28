@@ -2,15 +2,24 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Crear Proveedor - V2compuclick</title>
+    <title>Crear Proveedor</title>
 </head>
 <body>
-    <h1>Registrar Nuevo Proveedor</h1>
-    <form action="index.php?controller=proveedor&action=guardar" method="POST">
-        <label>ID de Persona:</label><input type="number" name="persona_id" required><br>
-        <label>Empresa:</label><input type="text" name="empresa" required><br>
+
+    <h1>Crear Proveedor</h1>
+
+    <form action="/proveedores/guardar" method="POST">
+        <label>ID Persona:</label>
+        <input type="number" name="persona_id"><br><br>
+
+        <label>Empresa:</label>
+        <input type="text" name="empresa"><br><br>
+
         <button type="submit">Guardar</button>
     </form>
-    <a href="index.php?controller=proveedor&action=index">Cancelar</a>
+
+    <br>
+    <a href="/proveedores">Volver</a>
+
 </body>
 </html>

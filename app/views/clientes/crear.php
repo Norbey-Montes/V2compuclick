@@ -2,15 +2,21 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Crear Cliente - V2compuclick</title>
+    <title>Crear Cliente</title>
 </head>
 <body>
-    <h1>Vincular Cliente</h1>
-    <form action="index.php?controller=cliente&action=guardar" method="POST">
-        <label>ID de Persona Existente:</label>
-        <input type="number" name="persona_id" required><br>
-        <button type="submit">Guardar Cliente</button>
+
+    <h1>Crear Cliente</h1>
+
+    <form action="/clientes/guardar" method="POST">
+        <label>ID Persona:</label>
+        <input type="number" name="persona_id"><br><br>
+
+        <button type="submit">Guardar</button>
     </form>
-    <a href="index.php?controller=cliente&action=index">Cancelar</a>
+
+    <br>
+    <a href="/clientes">Volver</a>
+
 </body>
 </html>

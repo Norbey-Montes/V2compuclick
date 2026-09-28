@@ -2,22 +2,45 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Crear Persona - V2compuclick</title>
+    <title>Crear Persona</title>
 </head>
 <body>
-    <h1>Registrar Nueva Persona</h1>
-    <form action="index.php?controller=persona&action=guardar" method="POST">
-        <label>Tipo Documento ID:</label><input type="number" name="tipodoc_id" required><br>
-        <label>Documento:</label><input type="text" name="documento" required><br>
-        <label>Nombres:</label><input type="text" name="nombres" required><br>
-        <label>Apellidos:</label><input type="text" name="apellidos" required><br>
-        <label>Dirección:</label><input type="text" name="direccion"><br>
-        <label>Teléfono:</label><input type="text" name="telefono"><br>
-        <label>Email:</label><input type="email" name="email"><br>
-        <label>Tipo Persona ID:</label><input type="number" name="tipopersona_id" required><br>
-        <label>Ciudad ID:</label><input type="number" name="ciudad_id" required><br>
+
+    <h1>Crear Persona</h1>
+
+    <form action="/personas/guardar" method="POST">
+        <label>Tipo Documento ID:</label>
+        <input type="number" name="tipodoc_id"><br><br>
+
+        <label>Documento:</label>
+        <input type="text" name="documento"><br><br>
+
+        <label>Nombres:</label>
+        <input type="text" name="nombres"><br><br>
+
+        <label>Apellidos:</label>
+        <input type="text" name="apellidos"><br><br>
+
+        <label>Dirección:</label>
+        <input type="text" name="direccion"><br><br>
+
+        <label>Teléfono:</label>
+        <input type="text" name="telefono"><br><br>
+
+        <label>Email:</label>
+        <input type="email" name="email"><br><br>
+
+        <label>Tipo Persona ID:</label>
+        <input type="number" name="tipopersona_id"><br><br>
+
+        <label>Ciudad ID:</label>
+        <input type="number" name="ciudad_id"><br><br>
+
         <button type="submit">Guardar</button>
     </form>
-    <a href="index.php?controller=persona&action=index">Cancelar</a>
+
+    <br>
+    <a href="/personas">Volver</a>
+
 </body>
 </html>

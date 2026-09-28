@@ -2,23 +2,38 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registrar Venta - V2compuclick</title>
+    <title>Crear Venta</title>
 </head>
 <body>
-    <h1>Registrar Venta</h1>
-    <form action="index.php?controller=venta&action=guardar" method="POST">
-        <label>Cliente ID:</label><input type="number" name="cliente_id" required><br>
-        <label>Tipo Pago ID:</label><input type="number" name="tipopago_id" required><br>
-        <label>Total Venta:</label><input type="number" step="0.01" name="total" required><br>
-        
-        <h3>Ítems de Venta (Simulación de estructura de productos)</h3>
-        <p><i>(Ajusta los inputs según la maquetación de tu carrito o formulario dinámico)</i></p>
-        <label>Computador ID:</label><input type="number" name="productos[0][computador_id]" required>
-        <label>Cantidad:</label><input type="number" name="productos[0][cantidad]" required>
-        <label>Precio Unitario:</label><input type="number" step="0.01" name="productos[0][precio]" required><br><br>
 
-        <button type="submit">Finalizar Venta</button>
+    <h1>Crear Venta</h1>
+
+    <form action="/ventas/guardar" method="POST">
+        <label>Cliente ID:</label>
+        <input type="number" name="cliente_id"><br><br>
+
+        <label>Tipo Pago ID:</label>
+        <input type="number" name="tipopago_id"><br><br>
+
+        <label>Total Venta:</label>
+        <input type="number" step="0.01" name="total"><br><br>
+
+        <h3>Ítems de Venta</h3>
+
+        <label>Computador ID:</label>
+        <input type="number" name="productos[0][computador_id]"><br><br>
+
+        <label>Cantidad:</label>
+        <input type="number" name="productos[0][cantidad]"><br><br>
+
+        <label>Precio Unitario:</label>
+        <input type="number" step="0.01" name="productos[0][precio]"><br><br>
+
+        <button type="submit">Guardar</button>
     </form>
-    <a href="index.php?controller=venta&action=index">Cancelar</a>
+
+    <br>
+    <a href="/ventas">Volver</a>
+
 </body>
 </html>

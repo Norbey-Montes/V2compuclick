@@ -10,6 +10,7 @@ class CompraController {
             $compras = $compraModel->getAll();
         } catch (PDOException $e) {
             echo "Error al cargar compras";
+            $compras = [];
         }
         require_once __DIR__ . '/../views/compras/index.php';
     }
@@ -23,6 +24,22 @@ class CompraController {
     }
 
     public function guardar() {
-        // Aquí iría la lógica para guardar en la base de datos
+        // 1. Recoger datos del formulario
+        $proveedor_id = $_POST['proveedor_id'];
+        $fecha        = $_POST['fecha'];
+        $total        = $_POST['total'];
+        $productos    = $_POST['productos'];
+
+        // 2. Guardar en la base de datos
+        $compraModel = new Compra();
+        $resultado = $compraModel->guardar($proveedor_id, $fecha, $total, $productos);
+
+        // 3. Validar con if y else
+        if ($resultado) {
+            echo "Compra registrada con éxito";
+            $this->index();
+        } else {
+            echo "Error al registrar la compra";
+        }
     }
 }

@@ -8,7 +8,7 @@
 
     <h1>Crear Computador</h1>
 
-    <form action="/computadores/guardar" method="POST">
+    <form action="/computadores" method="POST">
         <label>Marca:</label>
         <input type="text" name="marca"><br><br>
 
@@ -20,6 +20,9 @@
 
         <label>RAM:</label>
         <input type="text" name="ram"><br><br>
+
+        <label>Stock:</label>
+        <input type="number" name="stock"><br><br>
 
         <label>Almacenamiento:</label>
         <input type="text" name="almacenamiento"><br><br>

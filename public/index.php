@@ -47,7 +47,7 @@ if ($method === 'GET' && $uri === "/computadores/crear") {
     $controller = new ComputadorController();
     $controller->crear();
 }
-if ($method === 'POST' && $uri === "/computadores/guardar") {
+if ($method === 'POST' && $uri === "/computadores") {
     $controller = new ComputadorController();
     $controller->guardar();
 }
@@ -61,7 +61,7 @@ if ($method === 'GET' && $uri === "/clientes/crear") {
     $controller = new ClienteController();
     $controller->crear();
 }
-if ($method === 'POST' && $uri === "/clientes/guardar") {
+if ($method === 'POST' && $uri === "/clientes") {
     $controller = new ClienteController();
     $controller->guardar();
 }
@@ -75,7 +75,7 @@ if ($method === 'GET' && $uri === "/proveedores/crear") {
     $controller = new ProveedorController();
     $controller->crear();
 }
-if ($method === 'POST' && $uri === "/proveedores/guardar") {
+if ($method === 'POST' && $uri === "/proveedores") {
     $controller = new ProveedorController();
     $controller->guardar();
 }
@@ -89,11 +89,7 @@ if ($method === 'GET' && $uri === "/compras/crear") {
     $controller = new CompraController();
     $controller->crear();
 }
-if ($method === 'GET' && $uri === "/compras/ver") {
-    $controller = new CompraController();
-    $controller->ver();
-}
-if ($method === 'POST' && $uri === "/compras/guardar") {
+if ($method === 'POST' && $uri === "/compras") {
     $controller = new CompraController();
     $controller->guardar();
 }
@@ -107,7 +103,7 @@ if ($method === 'GET' && $uri === "/personas/crear") {
     $controller = new PersonaController();
     $controller->crear();
 }
-if ($method === 'POST' && $uri === "/personas/guardar") {
+if ($method === 'POST' && $uri === "/personas") {
     $controller = new PersonaController();
     $controller->guardar();
 }
@@ -121,11 +117,7 @@ if ($method === 'GET' && $uri === "/ventas/crear") {
     $controller = new VentaController();
     $controller->crear();
 }
-if ($method === 'GET' && $uri === "/ventas/ver") {
-    $controller = new VentaController();
-    $controller->ver();
-}
-if ($method === 'POST' && $uri === "/ventas/guardar") {
+if ($method === 'POST' && $uri === "/ventas") {
     $controller = new VentaController();
     $controller->guardar();
 }
@@ -139,12 +131,7 @@ if ($method === 'GET' && $uri === "/categorias/crear") {
     $controller = new CategoriaController();
     $controller->crear();
 }
-if ($method === 'POST' && $uri === "/categorias/guardar") {
+if ($method === 'POST' && $uri === "/categorias") {
     $controller = new CategoriaController();
     $controller->guardar();
 }
-// $computadorController = new ComputadorController();
-// $computadorController->index();
-
-// $clienteController = new ClienteController();
-// $clienteController->index();    

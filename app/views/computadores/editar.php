@@ -2,20 +2,38 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Computador - V2compuclick</title>
+    <title>Editar Computador</title>
 </head>
 <body>
+
     <h1>Editar Computador</h1>
-    <form action="index.php?controller=computador&action=actualizar&id=<?= $computador['id'] ?>" method="POST">
-        <label>Marca ID:</label><input type="number" name="marca_id" value="<?= $computador['marca_id'] ?>" required><br>
-        <label>Modelo:</label><input type="text" name="modelo" value="<?= $computador['modelo'] ?>" required><br>
-        <label>Procesador:</label><input type="text" name="procesador" value="<?= $computador['procesador'] ?>" required><br>
-        <label>RAM:</label><input type="text" name="ram" value="<?= $computador['ram'] ?>" required><br>
-        <label>Almacenamiento:</label><input type="text" name="almacenamiento" value="<?= $computador['almacenamiento'] ?>" required><br>
-        <label>Precio:</label><input type="number" step="0.01" name="precio" value="<?= $computador['precio'] ?>" required><br>
-        <label>Stock:</label><input type="number" name="stock" value="<?= $computador['stock'] ?>" required><br>
+
+    <form action="/computadores/actualizar" method="POST">
+        <input type="hidden" name="id" value="<?php echo $computador['id'] ?? ''; ?>">
+
+        <label>Modelo:</label>
+        <input type="text" name="modelo" value="<?php echo $computador['modelo'] ?? ''; ?>"><br><br>
+
+        <label>Procesador:</label>
+        <input type="text" name="procesador" value="<?php echo $computador['procesador'] ?? ''; ?>"><br><br>
+
+        <label>RAM:</label>
+        <input type="text" name="ram" value="<?php echo $computador['ram'] ?? ''; ?>"><br><br>
+
+        <label>Almacenamiento:</label>
+        <input type="text" name="almacenamiento" value="<?php echo $computador['almacenamiento'] ?? ''; ?>"><br><br>
+
+        <label>Precio Compra:</label>
+        <input type="number" step="0.01" name="preciocompra" value="<?php echo $computador['preciocompra'] ?? ''; ?>"><br><br>
+
+        <label>Precio Venta:</label>
+        <input type="number" step="0.01" name="precioventa" value="<?php echo $computador['precioventa'] ?? ''; ?>"><br><br>
+
         <button type="submit">Actualizar</button>
     </form>
-    <a href="index.php?controller=computador&action=index">Cancelar</a>
+
+    <br>
+    <a href="/computadores">Cancelar</a>
+
 </body>
 </html>

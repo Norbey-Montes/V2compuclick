@@ -8,9 +8,13 @@
 
     <h1>Crear Persona</h1>
 
-    <form action="/personas/guardar" method="POST">
-        <label>Tipo Documento ID:</label>
-        <input type="number" name="tipodoc_id"><br><br>
+    <form action="/personas" method="POST">
+        <label>Tipo Documento:</label>
+        <select name="tipodoc_id">
+            <option value="1">CC - Cédula de Ciudadanía</option>
+            <option value="2">NIT - Número de Identificación Tributaria</option>
+            <option value="3">CE - Cédula de Extranjería</option>
+        </select><br><br>
 
         <label>Documento:</label>
         <input type="text" name="documento"><br><br>
@@ -30,11 +34,14 @@
         <label>Email:</label>
         <input type="email" name="email"><br><br>
 
-        <label>Tipo Persona ID:</label>
-        <input type="number" name="tipopersona_id"><br><br>
+        <label>Tipo Persona:</label>
+        <select name="tipopersona_id">
+            <option value="1">Persona Natural</option>
+            <option value="2">Persona Jurídica</option>
+        </select><br><br>
 
         <label>Ciudad ID:</label>
-        <input type="number" name="ciudad_id"><br><br>
+        <input type="number" name="ciudad_id" value="1"><br><br>
 
         <button type="submit">Guardar</button>
     </form>

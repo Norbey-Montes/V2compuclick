@@ -3,22 +3,97 @@
 require_once __DIR__ . '/../../config/Database.php';
 
 class Venta {
-    private $db;
+    private $connection;
 
     public function __construct() {
-        $database = new Database();
-        $this->db = $database->getConnection();
+        try {
+            $database = new Database();
+            $this->connection = $database->connect();
+            if ($this->connection) {
+                // Activar modo de excepciones para capturar errores de claves foráneas
+                $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            }
+        } catch (PDOException $e) {
+            $this->connection = null;
+        }
     }
 
     public function getAll() {
+        if (!$this->connection) {
+            return [];
+        }
+
         try {
-            // Revisa que el nombre de la tabla coincida con tu base de datos en phpMyAdmin
-            $query = "SELECT * FROM ventas";
-            $consultar = $this->db->prepare($query);
-            $consultar->execute();
-            return $consultar->fetchAll(PDO::FETCH_ASSOC);
+            $sql = "SELECT 
+                        v.id AS venta_id,
+                        CONCAT(p.nombres, ' ', p.apellidos) AS cliente,
+                        m.nombre AS marca,
+                        comp.modelo,
+                        comp.procesador,
+                        comp.ram,
+                        comp.almacenamiento,
+                        dv.cantidad,
+                        dv.precio AS precio_unitario,
+                        tp.nombre AS tipo_pago,
+                        v.fecha,
+                        v.total
+                    FROM venta v
+                    LEFT JOIN clientes c ON v.cliente_id = c.id
+                    LEFT JOIN persona p ON c.persona_id = p.id
+                    LEFT JOIN tipopago tp ON v.tipopago_id = tp.id
+                    LEFT JOIN descripventa dv ON dv.venta_id = v.id
+                    LEFT JOIN computador comp ON dv.computador_id = comp.id
+                    LEFT JOIN marca m ON comp.marca_id = m.id
+                    ORDER BY v.id DESC";
+
+            $consulta = $this->connection->query($sql);
+            return $consulta ? $consulta->fetchAll(PDO::FETCH_ASSOC) : [];
         } catch (PDOException $e) {
             return [];
+        }
+    }
+
+    public function guardar($cliente_id, $tipopago_id, $total, $computadores) {
+        if (!$this->connection) {
+            echo "Error: No hay conexión a la base de datos.";
+            return false;
+        }
+
+        try {
+            $fecha = date('Y-m-d H:i:s');
+
+            // 1. Insertar la cabecera en la tabla 'venta'
+            $sqlVenta = "INSERT INTO venta (cliente_id, tipopago_id, fecha, total) VALUES (:cliente_id, :tipopago_id, :fecha, :total)";
+            $consultaVenta = $this->connection->prepare($sqlVenta);
+            $consultaVenta->bindParam(':cliente_id', $cliente_id);
+            $consultaVenta->bindParam(':tipopago_id', $tipopago_id);
+            $consultaVenta->bindParam(':fecha', $fecha);
+            $consultaVenta->bindParam(':total', $total);
+            $consultaVenta->execute();
+
+            $venta_id = $this->connection->lastInsertId();
+
+            // 2. Insertar los detalles en la tabla 'descripventa'
+            if (!empty($computadores)) {
+                $sqlDetalle = "INSERT INTO descripventa (venta_id, computador_id, cantidad, precio) 
+                               VALUES (:venta_id, :computador_id, :cantidad, :precio)";
+                $consultaDetalle = $this->connection->prepare($sqlDetalle);
+
+                foreach ($computadores as $item) {
+                    if (!empty($item['computador_id'])) {
+                        $consultaDetalle->bindParam(':venta_id', $venta_id);
+                        $consultaDetalle->bindParam(':computador_id', $item['computador_id']);
+                        $consultaDetalle->bindParam(':cantidad', $item['cantidad']);
+                        $consultaDetalle->bindParam(':precio', $item['precio']);
+                        $consultaDetalle->execute();
+                    }
+                }
+            }
+
+            return true;
+        } catch (PDOException $e) {
+            echo "Error de MySQL al guardar venta: " . $e->getMessage();
+            return false;
         }
     }
 }

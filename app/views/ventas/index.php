@@ -14,6 +14,13 @@
                 <tr>
                     <th>ID Venta</th>
                     <th>Cliente</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Procesador</th>
+                    <th>RAM</th>
+                    <th>Almacenamiento</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
                     <th>Tipo Pago</th>
                     <th>Fecha</th>
                     <th>Total</th>
@@ -22,11 +29,18 @@
             <tbody>
                 <?php foreach ($ventas as $ven): ?>
                 <tr>
-                    <td><?= $ven['id'] ?? $ven['venta_id'] ?></td>
-                    <td><?= $ven['cliente'] ?? $ven['cliente_id'] ?? 'Sin Cliente' ?></td>
+                    <td><?= $ven['venta_id'] ?? $ven['id'] ?></td>
+                    <td><?= $ven['cliente'] ?? 'Sin Cliente' ?></td>
+                    <td><?= $ven['marca'] ?? 'N/A' ?></td>
+                    <td><?= $ven['modelo'] ?? 'N/A' ?></td>
+                    <td><?= $ven['procesador'] ?? 'N/A' ?></td>
+                    <td><?= $ven['ram'] ?? 'N/A' ?></td>
+                    <td><?= $ven['almacenamiento'] ?? 'N/A' ?></td>
+                    <td><?= $ven['cantidad'] ?? '1' ?></td>
+                    <td>$<?= number_format($ven['precio_unitario'] ?? 0, 2) ?></td>
                     <td><?= $ven['tipo_pago'] ?? 'Sin Tipo' ?></td>
                     <td><?= $ven['fecha'] ?? '' ?></td>
-                    <td><?= $ven['total'] ?? '0' ?></td>
+                    <td>$<?= number_format($ven['total'] ?? 0, 2) ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

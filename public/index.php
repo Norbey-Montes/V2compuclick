@@ -10,6 +10,7 @@ require_once __DIR__ . '/../app/controllers/CategoriaController.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$ruta = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 ?>
 
 <!-- Barra de Navegación -->
@@ -134,4 +135,9 @@ if ($method === 'GET' && $uri === "/categorias/crear") {
 if ($method === 'POST' && $uri === "/categorias") {
     $controller = new CategoriaController();
     $controller->guardar();
+}
+
+if ($ruta ==="/computadores/editar" && $method ==="GET"){
+    $controller = new ComputadorController();
+    $controller->editar();
 }

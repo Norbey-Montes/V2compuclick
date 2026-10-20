@@ -21,6 +21,7 @@
                     <th>Precio Compra</th>
                     <th>Precio Venta</th>
                     <th>Proveedor</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,9 +33,12 @@
                     <td><?= $comp['procesador'] ?></td>
                     <td><?= $comp['ram'] ?></td>
                     <td><?= $comp['almacenamiento'] ?></td>
-                    <td>$<?= number_format($comp['preciocompra'], 2) ?></td>
+                    <td>$<?= number_format($comp['preciocompra'], 2) ?></td> 
                     <td>$<?= number_format($comp['precioventa'], 2) ?></td>
                     <td><?= $comp['proveedor'] ?? 'Sin Proveedor' ?></td>
+                    <td>
+                        <a href="/computadores/editar?id=<?= $comp['id'] ?>">Editar</a> 
+                    </td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

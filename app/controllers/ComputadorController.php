@@ -22,18 +22,32 @@ class ComputadorController
         require_once __DIR__ . '/../views/computadores/crear.php';
     }
 
+    public function editar()
+    {
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+       $computadorModel = new Computador();
+        $computador = $computadorModel->getById($id);
+
+        if (!$computador) {
+            echo "Computador no encontrado";
+            return;
+        }
+
+        require_once __DIR__ . '/../views/computadores/editar.php';
+    }
     public function guardar()
     {
         // 1. Recoger datos del formulario
-        $marca          = $_POST['marca'];
-        $proveedor_id   = $_POST['proveedor_id'];
-        $modelo         = $_POST['modelo'];
-        $procesador     = $_POST['procesador'];
-        $ram            = $_POST['ram'];
-        $stock          = $_POST['stock'];
+        $marca = $_POST['marca'];
+        $proveedor_id = $_POST['proveedor_id'];
+        $modelo = $_POST['modelo'];
+        $procesador = $_POST['procesador'];
+        $ram = $_POST['ram'];
+        $stock = $_POST['stock'];
         $almacenamiento = $_POST['almacenamiento'];
-        $preciocompra   = $_POST['preciocompra'];
-        $precioventa    = $_POST['precioventa'];
+        $preciocompra = $_POST['preciocompra'];
+        $precioventa = $_POST['precioventa'];
 
         // 2. Guardar en la base de datos
         $computadorModel = new Computador();

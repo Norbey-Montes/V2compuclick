@@ -4,7 +4,6 @@ require_once __DIR__ . '/../models/Cliente.php';
 
 class ClienteController
 {
-
     public function index()
     {
         $clienteModel = new Cliente();
@@ -20,6 +19,21 @@ class ClienteController
     public function crear()
     {
         require_once __DIR__ . '/../views/clientes/crear.php';
+    }
+
+    public function editar()
+    {
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+        $clienteModel = new Cliente();
+        $cliente = $clienteModel->getById($id);
+
+        if (!$cliente) {
+            echo "Cliente no encontrado";
+            return;
+        }
+
+        require_once __DIR__ . '/../views/clientes/editar.php';
     }
 
     public function guardar()
@@ -39,10 +53,40 @@ class ClienteController
         $resultado = $clienteModel->guardar($tipodoc_id, $tipopersona_id, $ciudad_id, $nombres, $apellidos, $documento, $telefono, $email, $direccion);
 
         if ($resultado) {
-            echo "Cliente guardado con éxito";
-            $this->index();
+            header('Location: /clientes');
+            exit;
         } else {
             echo "Error al guardar el cliente";
+        }
+    }
+
+    public function actualizar()
+    {
+        $id             = $_POST['id'] ?? null;
+        $persona_id     = $_POST['persona_id'] ?? null;
+        $tipodoc_id     = $_POST['tipodoc_id'] ?? '';
+        $tipopersona_id = $_POST['tipopersona_id'] ?? '';
+        $ciudad_id      = $_POST['ciudad_id'] ?? '';
+        $nombres        = $_POST['nombres'] ?? '';
+        $apellidos      = $_POST['apellidos'] ?? '';
+        $documento      = $_POST['documento'] ?? '';
+        $telefono       = $_POST['telefono'] ?? '';
+        $email          = $_POST['email'] ?? '';
+        $direccion      = $_POST['direccion'] ?? '';
+
+        if (!$id || !$persona_id) {
+            echo "IDs no válidos para actualizar.";
+            return;
+        }
+
+        $clienteModel = new Cliente();
+        $resultado = $clienteModel->actualizar($id, $persona_id, $tipodoc_id, $tipopersona_id, $ciudad_id, $nombres, $apellidos, $documento, $telefono, $email, $direccion);
+
+        if ($resultado) {
+            header('Location: /clientes?exito=actualizado');
+            exit;
+        } else {
+            echo "Error al actualizar el cliente";
         }
     }
 }

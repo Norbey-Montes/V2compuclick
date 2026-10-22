@@ -9,7 +9,7 @@
     <p><b>Cliente:</b> <?= $venta['cliente'] ?></p>
     <p><b>Método de Pago:</b> <?= $venta['tipopago'] ?></p>
     <p><b>Fecha:</b> <?= $venta['fecha'] ?></p>
-    
+
     <h3>Productos Vendidos</h3>
     <table border="1">
         <thead>
@@ -32,6 +32,6 @@
         </tbody>
     </table>
     <h3>Total General: $<?= number_format($venta['total'], 2) ?></h3>
-    <br><a href="index.php?controller=venta&action=index">Volver al listado</a>
+    <br><a href="/ventas">Volver al listado</a>
 </body>
 </html>

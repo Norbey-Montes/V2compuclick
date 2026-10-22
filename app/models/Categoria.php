@@ -38,7 +38,7 @@ class Categoria
             $consulta->bindParam(':id', $id, PDO::PARAM_INT);
             $consulta->execute();
 
-            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+            return $consulta->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return [];
         }
@@ -55,6 +55,23 @@ class Categoria
             return $consulta->execute();
         } catch (PDOException $e) {
             echo "Error al guardar la categoría: " . $nombre . " Error SQL: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function actualizar($id, $nombre)
+    {
+        try {
+            $sql = "UPDATE categorias SET nombre = :nombre WHERE id = :id";
+
+            $consulta = $this->connection->prepare($sql);
+            $consulta->bindParam(':id', $id, PDO::PARAM_INT);
+            $consulta->bindParam(':nombre', $nombre);
+
+            return $consulta->execute();
+        } catch (PDOException $e) {
+            echo "Error al actualizar la categoría: " . $e->getMessage();
+            return false;
         }
     }
 }

@@ -51,6 +51,28 @@ class Compra {
         }
     }
 
+    public function getDetallesByCompraId($compra_id) {
+        try {
+            $sql = "SELECT 
+                        dc.cantidad,
+                        dc.precio,
+                        comp.modelo,
+                        m.nombre AS marca
+                    FROM descripcompra dc
+                    INNER JOIN computador comp ON dc.computador_id = comp.id
+                    LEFT JOIN marca m ON comp.marca_id = m.id
+                    WHERE dc.compra_id = :compra_id";
+
+            $consulta = $this->connection->prepare($sql);
+            $consulta->bindParam(':compra_id', $compra_id, PDO::PARAM_INT);
+            $consulta->execute();
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
     public function guardar($proveedor_id, $fecha, $total, $productos) {
         try {
             // 1. Insertar la cabecera en la tabla 'compra'

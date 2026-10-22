@@ -10,7 +10,6 @@ class Venta {
             $database = new Database();
             $this->connection = $database->connect();
             if ($this->connection) {
-                // Activar modo de excepciones para capturar errores de claves foráneas
                 $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             }
         } catch (PDOException $e) {
@@ -27,13 +26,6 @@ class Venta {
             $sql = "SELECT 
                         v.id AS venta_id,
                         CONCAT(p.nombres, ' ', p.apellidos) AS cliente,
-                        m.nombre AS marca,
-                        comp.modelo,
-                        comp.procesador,
-                        comp.ram,
-                        comp.almacenamiento,
-                        dv.cantidad,
-                        dv.precio AS precio_unitario,
                         tp.nombre AS tipo_pago,
                         v.fecha,
                         v.total
@@ -41,13 +33,54 @@ class Venta {
                     LEFT JOIN clientes c ON v.cliente_id = c.id
                     LEFT JOIN persona p ON c.persona_id = p.id
                     LEFT JOIN tipopago tp ON v.tipopago_id = tp.id
-                    LEFT JOIN descripventa dv ON dv.venta_id = v.id
-                    LEFT JOIN computador comp ON dv.computador_id = comp.id
-                    LEFT JOIN marca m ON comp.marca_id = m.id
                     ORDER BY v.id DESC";
 
             $consulta = $this->connection->query($sql);
             return $consulta ? $consulta->fetchAll(PDO::FETCH_ASSOC) : [];
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    public function getById($id) {
+        try {
+            $sql = "SELECT 
+                        v.*,
+                        CONCAT(p.nombres, ' ', p.apellidos) AS cliente,
+                        tp.nombre AS tipopago
+                    FROM venta v
+                    LEFT JOIN clientes c ON v.cliente_id = c.id
+                    LEFT JOIN persona p ON c.persona_id = p.id
+                    LEFT JOIN tipopago tp ON v.tipopago_id = tp.id
+                    WHERE v.id = :id";
+
+            $consulta = $this->connection->prepare($sql);
+            $consulta->bindParam(':id', $id, PDO::PARAM_INT);
+            $consulta->execute();
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function getDetallesByVentaId($venta_id) {
+        try {
+            $sql = "SELECT 
+                        dv.cantidad,
+                        dv.precio,
+                        comp.modelo,
+                        m.nombre AS marca
+                    FROM descripventa dv
+                    INNER JOIN computador comp ON dv.computador_id = comp.id
+                    LEFT JOIN marca m ON comp.marca_id = m.id
+                    WHERE dv.venta_id = :venta_id";
+
+            $consulta = $this->connection->prepare($sql);
+            $consulta->bindParam(':venta_id', $venta_id, PDO::PARAM_INT);
+            $consulta->execute();
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return [];
         }

@@ -6,7 +6,14 @@
 </head>
 <body>
     <h1>Gestión de Personas</h1>
-    <a href="index.php?controller=persona&action=crear">Nueva Persona</a>
+
+    <!-- Alerta de éxito sin diseño -->
+    <?php if (isset($_GET['exito']) && $_GET['exito'] == 'actualizado'): ?>
+        <p><b>¡Actualizado con éxito!</b> La persona se ha modificado correctamente.</p>
+    <?php endif; ?>
+
+    <a href="/personas/crear">Nueva Persona</a>
+    <br><br>
     <table border="1">
         <thead>
             <tr>
@@ -31,12 +38,12 @@
                 <td><?= $p['telefono'] ?></td>
                 <td><?= $p['email'] ?></td>
                 <td>
-                    <a href="index.php?controller=persona&action=editar&id=<?= $p['id'] ?>">Editar</a>
+                    <a href="/personas/editar?id=<?= $p['id'] ?>">Editar</a>
                 </td>
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-    <br><a href="index.php">Volver al inicio</a>
+    <br><a href="/computadores">Volver al inicio</a>
 </body>
 </html>

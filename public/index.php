@@ -52,6 +52,15 @@ if ($method === 'POST' && $uri === "/computadores") {
     $controller = new ComputadorController();
     $controller->guardar();
 }
+if ($uri === "/computadores/editar" && $method === "GET") {
+    $controller = new ComputadorController();
+    $controller->editar();
+}
+// NUEVA RUTA AGREGADA PARA PROCESAR LA ACTUALIZACIÓN POR POST:
+if ($method === 'POST' && $uri === "/computadores/actualizar") {
+    $controller = new ComputadorController();
+    $controller->actualizar();
+}
 
 // --- CLIENTES ---
 if ($method === 'GET' && $uri === "/clientes") {
@@ -65,6 +74,14 @@ if ($method === 'GET' && $uri === "/clientes/crear") {
 if ($method === 'POST' && $uri === "/clientes") {
     $controller = new ClienteController();
     $controller->guardar();
+}
+if ($uri === "/clientes/editar" && $method === "GET") {
+    $controller = new ClienteController();
+    $controller->editar();
+}
+if ($method === 'POST' && $uri === "/clientes/actualizar") {
+    $controller = new ClienteController();
+    $controller->actualizar();
 }
 
 // --- PROVEEDORES ---
@@ -80,6 +97,14 @@ if ($method === 'POST' && $uri === "/proveedores") {
     $controller = new ProveedorController();
     $controller->guardar();
 }
+if ($uri === "/proveedores/editar" && $method === "GET") {
+    $controller = new ProveedorController();
+    $controller->editar();
+}
+if ($method === 'POST' && $uri === "/proveedores/actualizar") {
+    $controller = new ProveedorController();
+    $controller->actualizar();
+}
 
 // --- COMPRAS ---
 if ($method === 'GET' && $uri === "/compras") {
@@ -94,6 +119,11 @@ if ($method === 'POST' && $uri === "/compras") {
     $controller = new CompraController();
     $controller->guardar();
 }
+if ($uri === "/compras/ver" && $method === "GET") {
+    $controller = new CompraController();
+    $controller->ver();
+}
+
 
 // --- PERSONAS ---
 if ($method === 'GET' && $uri === "/personas") {
@@ -107,6 +137,14 @@ if ($method === 'GET' && $uri === "/personas/crear") {
 if ($method === 'POST' && $uri === "/personas") {
     $controller = new PersonaController();
     $controller->guardar();
+}
+if ($uri === "/personas/editar" && $method === "GET") {
+    $controller = new PersonaController();
+    $controller->editar();
+}
+if ($method === 'POST' && $uri === "/personas/actualizar") {
+    $controller = new PersonaController();
+    $controller->actualizar();
 }
 
 // --- VENTAS ---
@@ -122,6 +160,10 @@ if ($method === 'POST' && $uri === "/ventas") {
     $controller = new VentaController();
     $controller->guardar();
 }
+if ($uri === "/ventas/ver" && $method === "GET") {
+    $controller = new VentaController();
+    $controller->ver();
+}
 
 // --- CATEGORÍAS ---
 if ($method === 'GET' && $uri === "/categorias") {
@@ -136,8 +178,11 @@ if ($method === 'POST' && $uri === "/categorias") {
     $controller = new CategoriaController();
     $controller->guardar();
 }
-
-if ($ruta ==="/computadores/editar" && $method ==="GET"){
-    $controller = new ComputadorController();
+if ($uri === "/categorias/editar" && $method === "GET") {
+    $controller = new CategoriaController();
     $controller->editar();
+}
+if ($method === 'POST' && $uri === "/categorias/actualizar") {
+    $controller = new CategoriaController();
+    $controller->actualizar();
 }

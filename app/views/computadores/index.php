@@ -8,6 +8,14 @@
 
     <h1>Listado Computadores</h1>
 
+    <!-- Alerta visual de éxito -->
+    <?php if (isset($_GET['exito']) && $_GET['exito'] == 'actualizado'): ?>
+        <div>
+            <b>¡Actualizado con éxito!</b> El computador se ha modificado correctamente.
+        </div>
+        <br>
+    <?php endif; ?>
+
     <?php if (!empty($computadores)) { ?>
         <table border="1">
             <thead>

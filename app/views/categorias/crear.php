@@ -10,7 +10,7 @@
 
     <form action="/categorias" method="POST">
         <label>Nombre:</label>
-        <input type="text" name="nombre"><br><br>
+        <input type="text" name="nombre" required><br><br>
 
         <button type="submit">Guardar</button>
     </form>

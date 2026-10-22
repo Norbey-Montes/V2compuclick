@@ -2,52 +2,48 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Listado de Ventas</title>
+    <title>Listado de Ventas - V2compuclick</title>
 </head>
 <body>
+    <h1>Listado de Ventas</h1>
 
-    <h1>Listado Ventas</h1>
+    <!-- Alerta de éxito sin diseño -->
+    <?php if (isset($_GET['exito']) && $_GET['exito'] == 'registrado'): ?>
+        <p><b>¡Registrado con éxito!</b> La venta se ha guardado correctamente.</p>
+    <?php endif; ?>
 
+    <a href="/ventas/crear"><button>Crear Venta</button></a>
+    <br><br>
     <?php if (!empty($ventas)) { ?>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>ID Venta</th>
-                    <th>Cliente</th>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Procesador</th>
-                    <th>RAM</th>
-                    <th>Almacenamiento</th>
-                    <th>Cantidad</th>
-                    <th>Precio Unitario</th>
-                    <th>Tipo Pago</th>
-                    <th>Fecha</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($ventas as $ven): ?>
-                <tr>
-                    <td><?= $ven['venta_id'] ?? $ven['id'] ?></td>
-                    <td><?= $ven['cliente'] ?? 'Sin Cliente' ?></td>
-                    <td><?= $ven['marca'] ?? 'N/A' ?></td>
-                    <td><?= $ven['modelo'] ?? 'N/A' ?></td>
-                    <td><?= $ven['procesador'] ?? 'N/A' ?></td>
-                    <td><?= $ven['ram'] ?? 'N/A' ?></td>
-                    <td><?= $ven['almacenamiento'] ?? 'N/A' ?></td>
-                    <td><?= $ven['cantidad'] ?? '1' ?></td>
-                    <td>$<?= number_format($ven['precio_unitario'] ?? 0, 2) ?></td>
-                    <td><?= $ven['tipo_pago'] ?? 'Sin Tipo' ?></td>
-                    <td><?= $ven['fecha'] ?? '' ?></td>
-                    <td>$<?= number_format($ven['total'] ?? 0, 2) ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID Venta</th>
+                <th>Cliente</th>
+                <th>Tipo Pago</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($ventas as $ven): ?>
+            <tr>
+                <td><?= $ven['venta_id'] ?></td>
+                <td><?= $ven['cliente'] ?? 'Sin Cliente' ?></td>
+                <td><?= $ven['tipo_pago'] ?? 'Sin Tipo' ?></td>
+                <td><?= $ven['fecha'] ?></td>
+                <td>$<?= number_format($ven['total'], 2) ?></td>
+                <td>
+                    <a href="/ventas/ver?id=<?= $ven['venta_id'] ?>">Ver Detalle</a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
     <?php } else { ?>
-        <p>No hay ventas para mostrar.</p>
+    <p>No hay ventas para mostrar.</p>
     <?php } ?>
-
+    <br><a href="/computadores">Volver al inicio</a>
 </body>
 </html>

@@ -12,6 +12,7 @@ class Persona
             $database = new Database();
             $this->connection = $database->connect();
         } catch (PDOException $e) {
+            
         }
     }
 
@@ -43,7 +44,7 @@ class Persona
             $consulta->bindParam(':id', $id, PDO::PARAM_INT);
             $consulta->execute();
 
-            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+            return $consulta->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return [];
         }
@@ -69,6 +70,41 @@ class Persona
             return $consulta->execute();
         } catch (PDOException $e) {
             echo "Error al guardar la persona: " . $nombres . " " . $apellidos . " Error SQL: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function actualizar($id, $tipodoc_id, $documento, $nombres, $apellidos, $direccion, $telefono, $email, $tipopersona_id, $ciudad_id)
+    {
+        try {
+            $sql = "UPDATE persona SET 
+                    tipodoc_id = :tipodoc_id, 
+                    documento = :documento, 
+                    nombres = :nombres, 
+                    apellidos = :apellidos, 
+                    direccion = :direccion, 
+                    telefono = :telefono, 
+                    email = :email, 
+                    tipopersona_id = :tipopersona_id, 
+                    ciudad_id = :ciudad_id 
+                    WHERE id = :id";
+
+            $consulta = $this->connection->prepare($sql);
+            $consulta->bindParam(':id', $id, PDO::PARAM_INT);
+            $consulta->bindParam(':tipodoc_id', $tipodoc_id);
+            $consulta->bindParam(':documento', $documento);
+            $consulta->bindParam(':nombres', $nombres);
+            $consulta->bindParam(':apellidos', $apellidos);
+            $consulta->bindParam(':direccion', $direccion);
+            $consulta->bindParam(':telefono', $telefono);
+            $consulta->bindParam(':email', $email);
+            $consulta->bindParam(':tipopersona_id', $tipopersona_id);
+            $consulta->bindParam(':ciudad_id', $ciudad_id);
+
+            return $consulta->execute();
+        } catch (PDOException $e) {
+            echo "Error al actualizar la persona: " . $e->getMessage();
+            return false;
         }
     }
 }

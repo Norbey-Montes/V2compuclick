@@ -47,7 +47,7 @@
     </form>
 
     <br>
-    <a href="/personas">Volver</a>
+    <a href="/personas"><button>Volver</button></a>
 
 </body>
 </html>

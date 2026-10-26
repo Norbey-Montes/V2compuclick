@@ -39,6 +39,6 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    <br><a href="index.php">Volver al inicio</a>
+    <br><a href="index.php"><button>Volver al inicio</button></a>
 </body>
 </html>

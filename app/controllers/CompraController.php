@@ -40,22 +40,39 @@ class CompraController {
     }
 
     public function guardar() {
-        // 1. Recoger datos del formulario
         $proveedor_id = $_POST['proveedor_id'] ?? '';
         $fecha        = $_POST['fecha'] ?? '';
         $total        = $_POST['total'] ?? '';
         $productos    = $_POST['productos'] ?? [];
 
-        // 2. Guardar en la base de datos
         $compraModel = new Compra();
         $resultado = $compraModel->guardar($proveedor_id, $fecha, $total, $productos);
 
-        // 3. Redireccionar al listado con alerta de exito
         if ($resultado) {
             header('Location: /compras?exito=registrado');
             exit;
         } else {
             echo "Error al registrar la compra";
+        }
+    }
+
+    // --- MÉTODO ELIMINAR ACTUALIZADO A MÉTODO POST ---
+    public function eliminar() {
+        $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            echo "ID de compra no válido para eliminar.";
+            return;
+        }
+
+        $compraModel = new Compra();
+        $resultado = $compraModel->eliminar($id);
+
+        if ($resultado) {
+            header('Location: /compras?exito=eliminado');
+            exit;
+        } else {
+            echo "Error al eliminar la compra";
         }
     }
 }

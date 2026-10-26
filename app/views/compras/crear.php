@@ -33,7 +33,7 @@
     </form>
 
     <br>
-    <a href="/compras">Volver</a>
+    <a href="/compras"><button>Volver</button></a>
 
 </body>
 </html>

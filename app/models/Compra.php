@@ -75,7 +75,6 @@ class Compra {
 
     public function guardar($proveedor_id, $fecha, $total, $productos) {
         try {
-            // 1. Insertar la cabecera en la tabla 'compra'
             $sqlCompra = "INSERT INTO compra (proveedor_id, fecha, total) VALUES (:proveedor_id, :fecha, :total)";
             $consultaCompra = $this->connection->prepare($sqlCompra);
             $consultaCompra->bindParam(':proveedor_id', $proveedor_id);
@@ -85,7 +84,6 @@ class Compra {
 
             $compra_id = $this->connection->lastInsertId();
 
-            // 2. Insertar los ítems en la tabla 'descripcompra'
             if (!empty($productos)) {
                 $sqlDetalle = "INSERT INTO descripcompra (compra_id, computador_id, cantidad, precio) 
                                VALUES (:compra_id, :computador_id, :cantidad, :precio)";
@@ -103,6 +101,24 @@ class Compra {
             return true;
         } catch (PDOException $e) {
             echo "Error al guardar la compra. Error SQL: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function eliminar($id) {
+        try {
+            $sqlDetalle = "DELETE FROM descripcompra WHERE compra_id = :id";
+            $consultaDetalle = $this->connection->prepare($sqlDetalle);
+            $consultaDetalle->bindParam(':id', $id, PDO::PARAM_INT);
+            $consultaDetalle->execute();
+
+            $sql = "DELETE FROM compra WHERE id = :id";
+            $consulta = $this->connection->prepare($sql);
+            $consulta->bindParam(':id', $id, PDO::PARAM_INT);
+            
+            return $consulta->execute();
+        } catch (PDOException $e) {
+            echo "Error al eliminar la compra: " . $e->getMessage();
             return false;
         }
     }

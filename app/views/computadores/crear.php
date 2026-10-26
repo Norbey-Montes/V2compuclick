@@ -40,7 +40,7 @@
     </form>
 
     <br>
-    <a href="/computadores">Volver</a>
+    <a href="/computadores"><button>Volver</button></a>
 
 </body>
 </html>

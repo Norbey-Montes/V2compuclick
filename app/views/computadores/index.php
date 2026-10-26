@@ -8,10 +8,21 @@
 
     <h1>Listado Computadores</h1>
 
-    <!-- Alerta visual de éxito -->
+    <!-- Botón / Enlace para Crear Computador -->
+    <a href="/computadores/crear"><button>Crear Computador</button></a>
+    <br><br>
+
+    <!-- Alertas visuales de éxito -->
     <?php if (isset($_GET['exito']) && $_GET['exito'] == 'actualizado'): ?>
         <div>
             <b>¡Actualizado con éxito!</b> El computador se ha modificado correctamente.
+        </div>
+        <br>
+    <?php endif; ?>
+
+    <?php if (isset($_GET['exito']) && $_GET['exito'] == 'eliminado'): ?>
+        <div style="color: red;">
+            <b>¡Eliminado con éxito!</b> El registro del computador se ha borrado correctamente.
         </div>
         <br>
     <?php endif; ?>
@@ -45,7 +56,13 @@
                     <td>$<?= number_format($comp['precioventa'], 2) ?></td>
                     <td><?= $comp['proveedor'] ?? 'Sin Proveedor' ?></td>
                     <td>
-                        <a href="/computadores/editar?id=<?= $comp['id'] ?>">Editar</a> 
+                        <a href="/computadores/editar?id=<?= $comp['id'] ?>">Editar</a> |
+                        
+                        <!-- FORMULARIO POST PARA ELIMINAR DENTRO DEL MISMO TD -->
+                        <form action="/computadores/eliminar" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este computador?');">
+                            <input type="hidden" name="id" value="<?= $comp['id'] ?>">
+                            <button type="submit" style="color: red; background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline;">Eliminar</button>
+                        </form>
                     </td>
                 </tr>
                 <?php endforeach; ?>

@@ -52,7 +52,7 @@
     </form>
 
     <br>
-    <a href="/proveedores">Volver</a>
+    <a href="/proveedores"><button>Volver</button></a>
 
 </body>
 </html>

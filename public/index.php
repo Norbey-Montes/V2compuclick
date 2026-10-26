@@ -56,10 +56,14 @@ if ($uri === "/computadores/editar" && $method === "GET") {
     $controller = new ComputadorController();
     $controller->editar();
 }
-// NUEVA RUTA AGREGADA PARA PROCESAR LA ACTUALIZACIÓN POR POST:
 if ($method === 'POST' && $uri === "/computadores/actualizar") {
     $controller = new ComputadorController();
     $controller->actualizar();
+}
+// RUTA CAMBIADA A MÉTODO POST PARA ELIMINAR:
+if ($method === 'POST' && $uri === "/computadores/eliminar") {
+    $controller = new ComputadorController();
+    $controller->eliminar();
 }
 
 // --- CLIENTES ---
@@ -83,6 +87,11 @@ if ($method === 'POST' && $uri === "/clientes/actualizar") {
     $controller = new ClienteController();
     $controller->actualizar();
 }
+// RUTA CAMBIADA A MÉTODO POST PARA ELIMINAR CLIENTE:
+if ($method === 'POST' && $uri === "/clientes/eliminar") {
+    $controller = new ClienteController();
+    $controller->eliminar();
+}
 
 // --- PROVEEDORES ---
 if ($method === 'GET' && $uri === "/proveedores") {
@@ -105,6 +114,11 @@ if ($method === 'POST' && $uri === "/proveedores/actualizar") {
     $controller = new ProveedorController();
     $controller->actualizar();
 }
+// RUTA CAMBIADA A MÉTODO POST PARA ELIMINAR PROVEEDOR:
+if ($method === 'POST' && $uri === "/proveedores/eliminar") {
+    $controller = new ProveedorController();
+    $controller->eliminar();
+}
 
 // --- COMPRAS ---
 if ($method === 'GET' && $uri === "/compras") {
@@ -124,6 +138,11 @@ if ($uri === "/compras/ver" && $method === "GET") {
     $controller->ver();
 }
 
+// RUTA CAMBIADA A MÉTODO POST PARA ELIMINAR COMPRA:
+if ($method === 'POST' && $uri === "/compras/eliminar") {
+    $controller = new CompraController();
+    $controller->eliminar();
+}
 
 // --- PERSONAS ---
 if ($method === 'GET' && $uri === "/personas") {
@@ -147,6 +166,13 @@ if ($method === 'POST' && $uri === "/personas/actualizar") {
     $controller->actualizar();
 }
 
+// RUTA CAMBIADA A MÉTODO POST PARA ELIMINAR PERSONA:
+if ($method === 'POST' && $uri === "/personas/eliminar") {
+    $controller = new PersonaController();
+    $controller->eliminar();
+}
+
+
 // --- VENTAS ---
 if ($method === 'GET' && $uri === "/ventas") {
     $controller = new VentaController();
@@ -163,6 +189,12 @@ if ($method === 'POST' && $uri === "/ventas") {
 if ($uri === "/ventas/ver" && $method === "GET") {
     $controller = new VentaController();
     $controller->ver();
+}
+
+// RUTA CAMBIADA A MÉTODO POST PARA ELIMINAR VENTA:
+if ($method === 'POST' && $uri === "/ventas/eliminar") {
+    $controller = new VentaController();
+    $controller->eliminar();
 }
 
 // --- CATEGORÍAS ---
@@ -185,4 +217,10 @@ if ($uri === "/categorias/editar" && $method === "GET") {
 if ($method === 'POST' && $uri === "/categorias/actualizar") {
     $controller = new CategoriaController();
     $controller->actualizar();
+}
+
+// RUTA CAMBIADA A MÉTODO POST PARA ELIMINAR CATEGORÍA:
+if ($method === 'POST' && $uri === "/categorias/eliminar") {
+    $controller = new CategoriaController();
+    $controller->eliminar();
 }

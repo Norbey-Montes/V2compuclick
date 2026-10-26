@@ -7,9 +7,13 @@
 <body>
     <h1>Gestión de Compras</h1>
 
-    <!-- Alerta de éxito sin diseño -->
+    <!-- Alertas de éxito -->
     <?php if (isset($_GET['exito']) && $_GET['exito'] == 'registrado'): ?>
         <p><b>¡Registrado con éxito!</b> La compra se ha guardado correctamente.</p>
+    <?php endif; ?>
+
+    <?php if (isset($_GET['exito']) && $_GET['exito'] == 'eliminado'): ?>
+        <p style="color: red;"><b>¡Eliminado con éxito!</b> La compra se ha borrado correctamente.</p>
     <?php endif; ?>
 
     <a href="/compras/crear"><button>Nueva Compra</button></a>
@@ -33,7 +37,13 @@
                 <td><?= $co['fecha'] ?></td>
                 <td>$<?= number_format($co['total'], 2) ?></td>
                 <td>
-                    <a href="/compras/ver?id=<?= $co['id'] ?>">Ver Detalle</a>
+                    <a href="/compras/ver?id=<?= $co['id'] ?>">Ver Detalle</a> |
+                    
+                    <!-- FORMULARIO POST PARA ELIMINAR DENTRO DEL MISMO TD -->
+                    <form action="/compras/eliminar" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta compra?');">
+                        <input type="hidden" name="id" value="<?= $co['id'] ?>">
+                        <button type="submit" style="color: red; background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline;">Eliminar</button>
+                    </form>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -42,6 +52,6 @@
     <?php } else { ?>
     <p>No hay compras para mostrar.</p>
     <?php } ?>
-    <br><a href="/computadores">Volver al inicio</a>
+    <br><a href="/computadores"><button>Volver al inicio</button></a>
 </body>
 </html>

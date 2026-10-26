@@ -38,7 +38,6 @@ class ComputadorController
 
     public function guardar()
     {
-        // 1. Recoger datos del formulario
         $marca = $_POST['marca'] ?? '';
         $proveedor_id = $_POST['proveedor_id'] ?? '';
         $modelo = $_POST['modelo'] ?? '';
@@ -49,11 +48,9 @@ class ComputadorController
         $preciocompra = $_POST['preciocompra'] ?? '';
         $precioventa = $_POST['precioventa'] ?? '';
 
-        // 2. Guardar en la base de datos
         $computadorModel = new Computador();
         $resultado = $computadorModel->guardar($marca, $proveedor_id, $modelo, $procesador, $ram, $stock, $almacenamiento, $preciocompra, $precioventa);
 
-        // 3. Redireccionar al listado principal con alerta opcional si deseas (o dejarlo normal)
         if ($resultado) {
             header('Location: /computadores?exito=guardado');
             exit;
@@ -64,7 +61,6 @@ class ComputadorController
 
     public function actualizar()
     {
-        // 1. Recoger datos del formulario incluyendo el ID oculto
         $id = $_POST['id'] ?? null;
         $modelo = $_POST['modelo'] ?? '';
         $procesador = $_POST['procesador'] ?? '';
@@ -78,16 +74,38 @@ class ComputadorController
             return;
         }
 
-        // 2. Ejecutar la actualización en la base de datos
         $computadorModel = new Computador();
         $resultado = $computadorModel->actualizar($id, $modelo, $procesador, $ram, $almacenamiento, $preciocompra, $precioventa);
 
-        // 3. Redireccionar al listado principal con el parámetro de éxito
         if ($resultado) {
             header('Location: /computadores?exito=actualizado');
             exit;
         } else {
             echo "Error al actualizar el computador";
+        }
+    }
+
+    // --- MÉTODO ELIMINAR ACTUALIZADO A MÉTODO POST ---
+    public function eliminar()
+    {
+        // 1. Capturar el ID que viene de forma segura por el método POST (filtro entero)
+        $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            echo "ID no válido para eliminar.";
+            return;
+        }
+
+        // 2. Llamar al modelo para ejecutar el DELETE
+        $computadorModel = new Computador();
+        $resultado = $computadorModel->eliminar($id);
+
+        // 3. Redireccionar con éxito o mostrar error
+        if ($resultado) {
+            header('Location: /computadores?exito=eliminado');
+            exit;
+        } else {
+            echo "Error al eliminar el computador";
         }
     }
 }

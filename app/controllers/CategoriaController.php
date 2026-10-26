@@ -38,14 +38,11 @@ class CategoriaController
 
     public function guardar()
     {
-        // 1. Recoger datos del formulario
         $nombre = $_POST['nombre'] ?? '';
 
-        // 2. Guardar en la base de datos
         $categoriaModel = new Categoria();
         $resultado = $categoriaModel->guardar($nombre);
 
-        // 3. Redireccionar al listado principal con mensaje de éxito
         if ($resultado) {
             header('Location: /categorias?exito=guardado');
             exit;
@@ -56,7 +53,6 @@ class CategoriaController
 
     public function actualizar()
     {
-        // 1. Recoger datos del formulario incluyendo el ID oculto
         $id     = $_POST['id'] ?? null;
         $nombre = $_POST['nombre'] ?? '';
 
@@ -65,16 +61,35 @@ class CategoriaController
             return;
         }
 
-        // 2. Ejecutar la actualización en la base de datos
         $categoriaModel = new Categoria();
         $resultado = $categoriaModel->actualizar($id, $nombre);
 
-        // 3. Redireccionar al listado principal con mensaje de éxito
         if ($resultado) {
             header('Location: /categorias?exito=actualizado');
             exit;
         } else {
             echo "Error al actualizar la categoría";
+        }
+    }
+
+    // --- MÉTODO ELIMINAR ACTUALIZADO A MÉTODO POST ---
+    public function eliminar()
+    {
+        $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            echo "ID no válido para eliminar.";
+            return;
+        }
+
+        $categoriaModel = new Categoria();
+        $resultado = $categoriaModel->eliminar($id);
+
+        if ($resultado) {
+            header('Location: /categorias?exito=eliminado');
+            exit;
+        } else {
+            echo "Error al eliminar la categoría";
         }
     }
 }

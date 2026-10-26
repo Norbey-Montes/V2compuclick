@@ -38,7 +38,6 @@ class ClienteController
 
     public function guardar()
     {
-        // Recoger datos con validación para evitar nulos
         $tipodoc_id     = !empty($_POST['tipodoc_id']) ? $_POST['tipodoc_id'] : 1;
         $tipopersona_id = !empty($_POST['tipopersona_id']) ? $_POST['tipopersona_id'] : 1;
         $ciudad_id      = !empty($_POST['ciudad_id']) ? $_POST['ciudad_id'] : 1;
@@ -87,6 +86,27 @@ class ClienteController
             exit;
         } else {
             echo "Error al actualizar el cliente";
+        }
+    }
+
+    // --- MÉTODO ELIMINAR ACTUALIZADO A MÉTODO POST ---
+    public function eliminar()
+    {
+        $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            echo "ID no válido para eliminar.";
+            return;
+        }
+
+        $clienteModel = new Cliente();
+        $resultado = $clienteModel->eliminar($id);
+
+        if ($resultado) {
+            header('Location: /clientes?exito=eliminado');
+            exit;
+        } else {
+            echo "Error al eliminar el cliente";
         }
     }
 }

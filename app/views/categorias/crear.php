@@ -16,7 +16,7 @@
     </form>
 
     <br>
-    <a href="/categorias">Volver</a>
+    <a href="/categorias"><button>Volver</button> </a>
 
 </body>
 </html>

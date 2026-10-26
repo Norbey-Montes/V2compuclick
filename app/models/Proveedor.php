@@ -59,7 +59,6 @@ class Proveedor
     public function guardar($empresa, $tipodoc_id, $tipopersona_id, $ciudad_id, $nombres, $apellidos, $documento, $telefono, $email, $direccion)
     {
         try {
-            // 1. Guardar primero al representante en la tabla 'persona'
             $sqlPersona = "INSERT INTO persona (tipodoc_id, tipopersona_id, ciudad_id, nombres, apellidos, documento, telefono, email, direccion) 
                            VALUES (:tipodoc_id, :tipopersona_id, :ciudad_id, :nombres, :apellidos, :documento, :telefono, :email, :direccion)";
             $consultaPersona = $this->connection->prepare($sqlPersona);
@@ -76,7 +75,6 @@ class Proveedor
 
             $persona_id = $this->connection->lastInsertId();
 
-            // 2. Guardar el proveedor con el persona_id generado
             $sql = "INSERT INTO proveedor (persona_id, empresa) VALUES (:persona_id, :empresa)";
             $consulta = $this->connection->prepare($sql);
             $consulta->bindParam(':persona_id', $persona_id);
@@ -92,7 +90,6 @@ class Proveedor
     public function actualizar($id, $persona_id, $empresa, $tipodoc_id, $tipopersona_id, $ciudad_id, $nombres, $apellidos, $documento, $telefono, $email, $direccion)
     {
         try {
-            // 1. Actualizar los datos de la persona asociada
             $sqlPersona = "UPDATE persona SET 
                            tipodoc_id = :tipodoc_id, 
                            tipopersona_id = :tipopersona_id, 
@@ -118,7 +115,6 @@ class Proveedor
             $consultaPersona->bindParam(':direccion', $direccion);
             $consultaPersona->execute();
 
-            // 2. Actualizar el nombre de la empresa del proveedor
             $sql = "UPDATE proveedor SET empresa = :empresa WHERE id = :id";
             $consulta = $this->connection->prepare($sql);
             $consulta->bindParam(':id', $id, PDO::PARAM_INT);
@@ -127,6 +123,19 @@ class Proveedor
             return $consulta->execute();
         } catch (PDOException $e) {
             echo "Error al actualizar el proveedor: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function eliminar($id)
+    {
+        try {
+            $sql = "DELETE FROM proveedor WHERE id = :id";
+            $consulta = $this->connection->prepare($sql);
+            $consulta->bindParam(':id', $id, PDO::PARAM_INT);
+            return $consulta->execute();
+        } catch (PDOException $e) {
+            echo "Error al eliminar el proveedor: " . $e->getMessage();
             return false;
         }
     }

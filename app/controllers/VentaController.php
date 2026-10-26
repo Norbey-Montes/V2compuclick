@@ -40,22 +40,39 @@ class VentaController {
     }
 
     public function guardar() {
-        // 1. Recoger datos del formulario
         $cliente_id   = $_POST['cliente_id'] ?? null;
         $tipopago_id  = $_POST['tipopago_id'] ?? null;
         $total        = $_POST['total'] ?? 0;
         $computadores = $_POST['computadores'] ?? [];
 
-        // 2. Guardar en la base de datos
         $ventaModel = new Venta();
         $resultado = $ventaModel->guardar($cliente_id, $tipopago_id, $total, $computadores);
 
-        // 3. Redireccionar al listado principal con parámetro de éxito
         if ($resultado) {
             header('Location: /ventas?exito=registrado');
             exit;
         } else {
             echo "Error al registrar la venta";
+        }
+    }
+
+    // --- MÉTODO ELIMINAR ACTUALIZADO A MÉTODO POST ---
+    public function eliminar() {
+        $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            echo "ID de venta no válido para eliminar.";
+            return;
+        }
+
+        $ventaModel = new Venta();
+        $resultado = $ventaModel->eliminar($id);
+
+        if ($resultado) {
+            header('Location: /ventas?exito=eliminado');
+            exit;
+        } else {
+            echo "Error al eliminar la venta";
         }
     }
 }

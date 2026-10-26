@@ -95,7 +95,6 @@ class Venta {
         try {
             $fecha = date('Y-m-d H:i:s');
 
-            // 1. Insertar la cabecera en la tabla 'venta'
             $sqlVenta = "INSERT INTO venta (cliente_id, tipopago_id, fecha, total) VALUES (:cliente_id, :tipopago_id, :fecha, :total)";
             $consultaVenta = $this->connection->prepare($sqlVenta);
             $consultaVenta->bindParam(':cliente_id', $cliente_id);
@@ -106,7 +105,6 @@ class Venta {
 
             $venta_id = $this->connection->lastInsertId();
 
-            // 2. Insertar los detalles en la tabla 'descripventa'
             if (!empty($computadores)) {
                 $sqlDetalle = "INSERT INTO descripventa (venta_id, computador_id, cantidad, precio) 
                                VALUES (:venta_id, :computador_id, :cantidad, :precio)";
@@ -126,6 +124,28 @@ class Venta {
             return true;
         } catch (PDOException $e) {
             echo "Error de MySQL al guardar venta: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function eliminar($id) {
+        if (!$this->connection) {
+            return false;
+        }
+
+        try {
+            $sqlDetalle = "DELETE FROM descripventa WHERE venta_id = :id";
+            $consultaDetalle = $this->connection->prepare($sqlDetalle);
+            $consultaDetalle->bindParam(':id', $id, PDO::PARAM_INT);
+            $consultaDetalle->execute();
+
+            $sql = "DELETE FROM venta WHERE id = :id";
+            $consulta = $this->connection->prepare($sql);
+            $consulta->bindParam(':id', $id, PDO::PARAM_INT);
+
+            return $consulta->execute();
+        } catch (PDOException $e) {
+            echo "Error al eliminar la venta: " . $e->getMessage();
             return false;
         }
     }

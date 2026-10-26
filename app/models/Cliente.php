@@ -60,7 +60,6 @@ class Cliente
     public function guardar($tipodoc_id, $tipopersona_id, $ciudad_id, $nombres, $apellidos, $documento, $telefono, $email, $direccion)
     {
         try {
-            // 1. Insertar en la tabla persona
             $sqlPersona = "INSERT INTO persona (tipodoc_id, tipopersona_id, ciudad_id, nombres, apellidos, documento, telefono, email, direccion) 
                            VALUES (:tipodoc_id, :tipopersona_id, :ciudad_id, :nombres, :apellidos, :documento, :telefono, :email, :direccion)";
             $consultaPersona = $this->connection->prepare($sqlPersona);
@@ -77,7 +76,6 @@ class Cliente
 
             $persona_id = $this->connection->lastInsertId();
 
-            // 2. Insertar en la tabla clientes
             $sql = "INSERT INTO clientes (persona_id) VALUES (:persona_id)";
             $consulta = $this->connection->prepare($sql);
             $consulta->bindParam(':persona_id', $persona_id);
@@ -92,7 +90,6 @@ class Cliente
     public function actualizar($id, $persona_id, $tipodoc_id, $tipopersona_id, $ciudad_id, $nombres, $apellidos, $documento, $telefono, $email, $direccion)
     {
         try {
-            // Actualizar datos de la persona asociada al cliente
             $sql = "UPDATE persona SET 
                     tipodoc_id = :tipodoc_id, 
                     tipopersona_id = :tipopersona_id, 
@@ -120,6 +117,19 @@ class Cliente
             return $consulta->execute();
         } catch (PDOException $e) {
             echo "Error al actualizar el cliente: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function eliminar($id)
+    {
+        try {
+            $sql = "DELETE FROM clientes WHERE id = :id";
+            $consulta = $this->connection->prepare($sql);
+            $consulta->bindParam(':id', $id, PDO::PARAM_INT);
+            return $consulta->execute();
+        } catch (PDOException $e) {
+            echo "Error al eliminar el cliente: " . $e->getMessage();
             return false;
         }
     }

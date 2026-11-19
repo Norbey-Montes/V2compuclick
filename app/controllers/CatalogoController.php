@@ -9,7 +9,7 @@ class CatalogoController {
     }
 
     // Gestiona catálogos auxiliares: marca, ciudad, departamento, tipodoc, tipopago, tipopersona
-    public function index() {
+    public function listar() {
         $tabla = $_GET['tabla'] ?? 'marca';
         $datos = $this->model->getAllFromTable($tabla);
         require_once __DIR__ . '/../views/parametros/index.php';
@@ -20,7 +20,7 @@ class CatalogoController {
             $tabla = $_POST['tabla'];
             $data = ['nombre' => $_POST['nombre']];
             $this->model->insertIntoTable($tabla, $data);
-            header('Location: index.php?controller=catalogo&action=index&tabla=' . $tabla);
+            header('Location: index.php?controller=catalogo&action=listar&tabla=' . $tabla);
             exit;
         }
     }

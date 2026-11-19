@@ -4,7 +4,7 @@ require_once __DIR__ . '/../models/Cliente.php';
 
 class ClienteController
 {
-    public function index()
+    public function listar()
     {
         $clienteModel = new Cliente();
         try {

@@ -4,7 +4,7 @@ require_once __DIR__ . '/../models/Venta.php';
 
 class VentaController {
 
-    public function index() {
+    public function listar() {
         $ventaModel = new Venta();
         try {
             $ventas = $ventaModel->getAll();

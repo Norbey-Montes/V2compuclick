@@ -4,7 +4,7 @@ require_once __DIR__ . '/../models/Persona.php';
 
 class PersonaController
 {
-    public function index()
+    public function listar()
     {
         $personaModel = new Persona();
         try {

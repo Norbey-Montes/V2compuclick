@@ -4,7 +4,7 @@ require_once __DIR__ . '/../models/Proveedor.php';
 
 class ProveedorController {
 
-    public function index() {
+    public function listar() {
         $proveedorModel = new Proveedor();
         try {
             $proveedores = $proveedorModel->getAll();

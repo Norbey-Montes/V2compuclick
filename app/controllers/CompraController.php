@@ -4,7 +4,7 @@ require_once __DIR__ . '/../models/Compra.php';
 
 class CompraController {
 
-    public function index() {
+    public function listar() {
         $compraModel = new Compra();
         try {
             $compras = $compraModel->getAll();

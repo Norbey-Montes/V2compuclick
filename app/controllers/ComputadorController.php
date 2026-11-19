@@ -4,7 +4,7 @@ require_once __DIR__ . '/../models/Computador.php';
 
 class ComputadorController
 {
-    public function index()
+    public function listar()
     {
         $computadorModel = new Computador();
         try {

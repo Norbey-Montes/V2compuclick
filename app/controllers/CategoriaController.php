@@ -4,7 +4,7 @@ require_once __DIR__ . '/../models/Categoria.php';
 
 class CategoriaController
 {
-    public function index()
+    public function listar()
     {
         $categoriaModel = new Categoria();
         try {

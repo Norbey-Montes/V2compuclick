@@ -58,8 +58,8 @@
                     <td>
                         <a href="/computadores/editar?id=<?= $comp['id'] ?>">Editar</a> |
                         
-                        <!-- FORMULARIO POST PARA ELIMINAR DENTRO DEL MISMO TD -->
-                        <form action="/computadores/eliminar" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este computador?');">
+                        <!-- FORMULARIO POST PARA ELIMINAR CON MARCA Y MODELO -->
+                        <form action="/computadores/eliminar" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar el computador: <?= $comp['marca'] ?> <?= $comp['modelo'] ?>?');">
                             <input type="hidden" name="id" value="<?= $comp['id'] ?>">
                             <button type="submit" style="color: red; background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline;">Eliminar</button>
                         </form>

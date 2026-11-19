@@ -85,7 +85,7 @@ class ComputadorController
         }
     }
 
-    // --- MÉTODO ELIMINAR ACTUALIZADO A MÉTODO POST ---
+    // --- MÉTODO ELIMINAR POST ---
     public function eliminar()
     {
         // 1. Capturar el ID que viene de forma segura por el método POST (filtro entero)

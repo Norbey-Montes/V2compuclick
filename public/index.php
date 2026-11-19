@@ -39,188 +39,310 @@ $ruta = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 <?php
 
-// --- COMPUTADORES ---
-if ($method === 'GET' && $uri === "/computadores") {
-    $controller = new ComputadorController();
-    $controller->index();
-}
-if ($method === 'GET' && $uri === "/computadores/crear") {
-    $controller = new ComputadorController();
-    $controller->crear();
-}
-if ($method === 'POST' && $uri === "/computadores") {
-    $controller = new ComputadorController();
-    $controller->guardar();
-}
-if ($uri === "/computadores/editar" && $method === "GET") {
-    $controller = new ComputadorController();
-    $controller->editar();
-}
-if ($method === 'POST' && $uri === "/computadores/actualizar") {
-    $controller = new ComputadorController();
-    $controller->actualizar();
-}
-// RUTA CAMBIADA A MÉTODO POST PARA ELIMINAR:
-if ($method === 'POST' && $uri === "/computadores/eliminar") {
-    $controller = new ComputadorController();
-    $controller->eliminar();
-}
+switch ($uri) {
+    /* --- COMPUTADORES --- */
+    case '/computadores':
+        if ($method === 'GET') {
+            $controller = new ComputadorController();
+            $controller->index();
+            exit;
+        }
+        if ($method === 'POST') {
+            $controller = new ComputadorController();
+            $controller->guardar();
+            exit;
+        }
+        break;
 
-// --- CLIENTES ---
-if ($method === 'GET' && $uri === "/clientes") {
-    $controller = new ClienteController();
-    $controller->index();
-}
-if ($method === 'GET' && $uri === "/clientes/crear") {
-    $controller = new ClienteController();
-    $controller->crear();
-}
-if ($method === 'POST' && $uri === "/clientes") {
-    $controller = new ClienteController();
-    $controller->guardar();
-}
-if ($uri === "/clientes/editar" && $method === "GET") {
-    $controller = new ClienteController();
-    $controller->editar();
-}
-if ($method === 'POST' && $uri === "/clientes/actualizar") {
-    $controller = new ClienteController();
-    $controller->actualizar();
-}
-// RUTA CAMBIADA A MÉTODO POST PARA ELIMINAR CLIENTE:
-if ($method === 'POST' && $uri === "/clientes/eliminar") {
-    $controller = new ClienteController();
-    $controller->eliminar();
-}
+    case '/computadores/crear':
+        if ($method === 'GET') {
+            $controller = new ComputadorController();
+            $controller->crear();
+            exit;
+        }
+        break;
 
-// --- PROVEEDORES ---
-if ($method === 'GET' && $uri === "/proveedores") {
-    $controller = new ProveedorController();
-    $controller->index();
-}
-if ($method === 'GET' && $uri === "/proveedores/crear") {
-    $controller = new ProveedorController();
-    $controller->crear();
-}
-if ($method === 'POST' && $uri === "/proveedores") {
-    $controller = new ProveedorController();
-    $controller->guardar();
-}
-if ($uri === "/proveedores/editar" && $method === "GET") {
-    $controller = new ProveedorController();
-    $controller->editar();
-}
-if ($method === 'POST' && $uri === "/proveedores/actualizar") {
-    $controller = new ProveedorController();
-    $controller->actualizar();
-}
-// RUTA CAMBIADA A MÉTODO POST PARA ELIMINAR PROVEEDOR:
-if ($method === 'POST' && $uri === "/proveedores/eliminar") {
-    $controller = new ProveedorController();
-    $controller->eliminar();
-}
+    case '/computadores/editar':
+        if ($method === 'GET') {
+            $controller = new ComputadorController();
+            $controller->editar();
+            exit;
+        }
+        break;
 
-// --- COMPRAS ---
-if ($method === 'GET' && $uri === "/compras") {
-    $controller = new CompraController();
-    $controller->index();
-}
-if ($method === 'GET' && $uri === "/compras/crear") {
-    $controller = new CompraController();
-    $controller->crear();
-}
-if ($method === 'POST' && $uri === "/compras") {
-    $controller = new CompraController();
-    $controller->guardar();
-}
-if ($uri === "/compras/ver" && $method === "GET") {
-    $controller = new CompraController();
-    $controller->ver();
-}
+    case '/computadores/actualizar':
+        if ($method === 'POST') {
+            $controller = new ComputadorController();
+            $controller->actualizar();
+            exit;
+        }
+        break;
 
-// RUTA CAMBIADA A MÉTODO POST PARA ELIMINAR COMPRA:
-if ($method === 'POST' && $uri === "/compras/eliminar") {
-    $controller = new CompraController();
-    $controller->eliminar();
-}
+    case '/computadores/eliminar':
+        if ($method === 'POST') {
+            $controller = new ComputadorController();
+            $controller->eliminar();
+            exit;
+        }
+        break;
 
-// --- PERSONAS ---
-if ($method === 'GET' && $uri === "/personas") {
-    $controller = new PersonaController();
-    $controller->index();
-}
-if ($method === 'GET' && $uri === "/personas/crear") {
-    $controller = new PersonaController();
-    $controller->crear();
-}
-if ($method === 'POST' && $uri === "/personas") {
-    $controller = new PersonaController();
-    $controller->guardar();
-}
-if ($uri === "/personas/editar" && $method === "GET") {
-    $controller = new PersonaController();
-    $controller->editar();
-}
-if ($method === 'POST' && $uri === "/personas/actualizar") {
-    $controller = new PersonaController();
-    $controller->actualizar();
-}
+    /* --- CLIENTES --- */
+    case '/clientes':
+        if ($method === 'GET') {
+            $controller = new ClienteController();
+            $controller->index();
+            exit;
+        }
+        if ($method === 'POST') {
+            $controller = new ClienteController();
+            $controller->guardar();
+            exit;
+        }
+        break;
 
-// RUTA CAMBIADA A MÉTODO POST PARA ELIMINAR PERSONA:
-if ($method === 'POST' && $uri === "/personas/eliminar") {
-    $controller = new PersonaController();
-    $controller->eliminar();
-}
+    case '/clientes/crear':
+        if ($method === 'GET') {
+            $controller = new ClienteController();
+            $controller->crear();
+            exit;
+        }
+        break;
 
+    case '/clientes/editar':
+        if ($method === 'GET') {
+            $controller = new ClienteController();
+            $controller->editar();
+            exit;
+        }
+        break;
 
-// --- VENTAS ---
-if ($method === 'GET' && $uri === "/ventas") {
-    $controller = new VentaController();
-    $controller->index();
-}
-if ($method === 'GET' && $uri === "/ventas/crear") {
-    $controller = new VentaController();
-    $controller->crear();
-}
-if ($method === 'POST' && $uri === "/ventas") {
-    $controller = new VentaController();
-    $controller->guardar();
-}
-if ($uri === "/ventas/ver" && $method === "GET") {
-    $controller = new VentaController();
-    $controller->ver();
-}
+    case '/clientes/actualizar':
+        if ($method === 'POST') {
+            $controller = new ClienteController();
+            $controller->actualizar();
+            exit;
+        }
+        break;
 
-// RUTA CAMBIADA A MÉTODO POST PARA ELIMINAR VENTA:
-if ($method === 'POST' && $uri === "/ventas/eliminar") {
-    $controller = new VentaController();
-    $controller->eliminar();
-}
+    case '/clientes/eliminar':
+        if ($method === 'POST') {
+            $controller = new ClienteController();
+            $controller->eliminar();
+            exit;
+        }
+        break;
 
-// --- CATEGORÍAS ---
-if ($method === 'GET' && $uri === "/categorias") {
-    $controller = new CategoriaController();
-    $controller->index();
-}
-if ($method === 'GET' && $uri === "/categorias/crear") {
-    $controller = new CategoriaController();
-    $controller->crear();
-}
-if ($method === 'POST' && $uri === "/categorias") {
-    $controller = new CategoriaController();
-    $controller->guardar();
-}
-if ($uri === "/categorias/editar" && $method === "GET") {
-    $controller = new CategoriaController();
-    $controller->editar();
-}
-if ($method === 'POST' && $uri === "/categorias/actualizar") {
-    $controller = new CategoriaController();
-    $controller->actualizar();
-}
+    /* --- PROVEEDORES --- */
+    case '/proveedores':
+        if ($method === 'GET') {
+            $controller = new ProveedorController();
+            $controller->index();
+            exit;
+        }
+        if ($method === 'POST') {
+            $controller = new ProveedorController();
+            $controller->guardar();
+            exit;
+        }
+        break;
 
-// RUTA CAMBIADA A MÉTODO POST PARA ELIMINAR CATEGORÍA:
-if ($method === 'POST' && $uri === "/categorias/eliminar") {
-    $controller = new CategoriaController();
-    $controller->eliminar();
+    case '/proveedores/crear':
+        if ($method === 'GET') {
+            $controller = new ProveedorController();
+            $controller->crear();
+            exit;
+        }
+        break;
+
+    case '/proveedores/editar':
+        if ($method === 'GET') {
+            $controller = new ProveedorController();
+            $controller->editar();
+            exit;
+        }
+        break;
+
+    case '/proveedores/actualizar':
+        if ($method === 'POST') {
+            $controller = new ProveedorController();
+            $controller->actualizar();
+            exit;
+        }
+        break;
+
+    case '/proveedores/eliminar':
+        if ($method === 'POST') {
+            $controller = new ProveedorController();
+            $controller->eliminar();
+            exit;
+        }
+        break;
+
+    /* --- COMPRAS --- */
+    case '/compras':
+        if ($method === 'GET') {
+            $controller = new CompraController();
+            $controller->index();
+            exit;
+        }
+        if ($method === 'POST') {
+            $controller = new CompraController();
+            $controller->guardar();
+            exit;
+        }
+        break;
+
+    case '/compras/crear':
+        if ($method === 'GET') {
+            $controller = new CompraController();
+            $controller->crear();
+            exit;
+        }
+        break;
+
+    case '/compras/ver':
+        if ($method === 'GET') {
+            $controller = new CompraController();
+            $controller->ver();
+            exit;
+        }
+        break;
+
+    case '/compras/eliminar':
+        if ($method === 'POST') {
+            $controller = new CompraController();
+            $controller->eliminar();
+            exit;
+        }
+        break;
+
+    /* --- PERSONAS --- */
+    case '/personas':
+        if ($method === 'GET') {
+            $controller = new PersonaController();
+            $controller->index();
+            exit;
+        }
+        if ($method === 'POST') {
+            $controller = new PersonaController();
+            $controller->guardar();
+            exit;
+        }
+        break;
+
+    case '/personas/crear':
+        if ($method === 'GET') {
+            $controller = new PersonaController();
+            $controller->crear();
+            exit;
+        }
+        break;
+
+    case '/personas/editar':
+        if ($method === 'GET') {
+            $controller = new PersonaController();
+            $controller->editar();
+            exit;
+        }
+        break;
+
+    case '/personas/actualizar':
+        if ($method === 'POST') {
+            $controller = new PersonaController();
+            $controller->actualizar();
+            exit;
+        }
+        break;
+
+    case '/personas/eliminar':
+        if ($method === 'POST') {
+            $controller = new PersonaController();
+            $controller->eliminar();
+            exit;
+        }
+        break;
+
+    /* --- VENTAS --- */
+    case '/ventas':
+        if ($method === 'GET') {
+            $controller = new VentaController();
+            $controller->index();
+            exit;
+        }
+        if ($method === 'POST') {
+            $controller = new VentaController();
+            $controller->guardar();
+            exit;
+        }
+        break;
+
+    case '/ventas/crear':
+        if ($method === 'GET') {
+            $controller = new VentaController();
+            $controller->crear();
+            exit;
+        }
+        break;
+
+    case '/ventas/ver':
+        if ($method === 'GET') {
+            $controller = new VentaController();
+            $controller->ver();
+            exit;
+        }
+        break;
+
+    case '/ventas/eliminar':
+        if ($method === 'POST') {
+            $controller = new VentaController();
+            $controller->eliminar();
+            exit;
+        }
+        break;
+
+    /* --- CATEGORÍAS --- */
+    case '/categorias':
+        if ($method === 'GET') {
+            $controller = new CategoriaController();
+            $controller->index();
+            exit;
+        }
+        if ($method === 'POST') {
+            $controller = new CategoriaController();
+            $controller->guardar();
+            exit;
+        }
+        break;
+
+    case '/categorias/crear':
+        if ($method === 'GET') {
+            $controller = new CategoriaController();
+            $controller->crear();
+            exit;
+        }
+        break;
+
+    case '/categorias/editar':
+        if ($method === 'GET') {
+            $controller = new CategoriaController();
+            $controller->editar();
+            exit;
+        }
+        break;
+
+    case '/categorias/actualizar':
+        if ($method === 'POST') {
+            $controller = new CategoriaController();
+            $controller->actualizar();
+            exit;
+        }
+        break;
+
+    case '/categorias/eliminar':
+        if ($method === 'POST') {
+            $controller = new CategoriaController();
+            $controller->eliminar();
+            exit;
+        }
+        break;
 }

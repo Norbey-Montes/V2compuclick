@@ -1,6 +1,5 @@
 <?php
 
-
 echo "<h2>1. Ejercicio 1: De PHP a JSON</h2>";
 
 $productosEjercicio1 = [
@@ -27,12 +26,10 @@ $productosEjercicio1 = [
     ]
 ];
 
-// 1 y 2. Convertir el arreglo completo a JSON y mostrar con echo
 $jsonTresProductos = json_encode($productosEjercicio1);
 echo "<p><strong>JSON inicial (3 productos):</strong></p>";
 echo "<pre>" . $jsonTresProductos . "</pre>";
 
-// 3 y 4. Agregar un cuarto producto y aplicar JSON_PRETTY_PRINT
 $productosEjercicio1[] = [
     "id" => 4,
     "nombre" => "Cable USB-C",
@@ -56,20 +53,16 @@ if (!file_exists($rutaArchivo)) {
     exit;
 }
 
-// 1 y 2. Leer el archivo con file_get_contents() y convertir a arreglo asociativo
 $contenidoJson = file_get_contents($rutaArchivo);
 $decodificado = json_decode($contenidoJson, true);
 
-// Soporta tanto {"productos": [...]} como [...] directamente
 $listaProductos = isset($decodificado["productos"]) ? $decodificado["productos"] : $decodificado;
 
-// 3 y 4. Recorrer con foreach y mostrar nombre y precio de cada producto
 echo "<p><strong>Todos los productos (Nombre y Precio):</strong></p>";
 foreach ($listaProductos as $item) {
     echo "Nombre: {$item['nombre']} | Precio: $" . number_format($item['precio'], 0, ",", ".") . "<br>";
 }
 
-// 5. Mostrar únicamente los productos cuyo precio sea superior a $100.000
 echo "<p><strong>Productos con precio superior a $100.000:</strong></p>";
 foreach ($listaProductos as $item) {
     if ($item["precio"] > 100000) {
@@ -78,24 +71,22 @@ foreach ($listaProductos as $item) {
 }
 
 
+
 echo "<h2>3. Ejercicio 3: Modificar y convertir información</h2>";
 
-// 1. Ya tenemos el JSON convertido en arreglo PHP ($listaProductos)
-$idBuscar = 3;         
+$idBuscar = 3;
 $nuevoPrecio = 850000;
 $encontrado = false;
 
-// 2 y 3. Buscar producto por identificador y modificar su precio dentro del arreglo
-foreach ($listaProductos as &$producto) {
-    if ($producto["id"] == $idBuscar) {
-        $producto["precio"] = $nuevoPrecio;
+foreach ($listaProductos as &$productoItem) {
+    if ($productoItem["id"] == $idBuscar) {
+        $productoItem["precio"] = $nuevoPrecio;
         $encontrado = true;
         break;
     }
 }
-unset($producto);
+unset($productoItem);
 
-// 4 y 5. Convertir nuevamente los datos a JSON y mostrar resultado
 $jsonModificado = json_encode($listaProductos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
 if ($encontrado) {
@@ -106,3 +97,81 @@ if ($encontrado) {
 
 echo "<pre>" . $jsonModificado . "</pre>";
 
+
+
+echo "<h2>4. Respuesta JSON de referencia (HTTP 200)</h2>";
+http_response_code(200);
+echo "<pre>" . json_encode(["mensaje" => "Operación exitosa"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
+
+
+
+echo "<h2>5. Actividad 2: Consulta del producto Mouse</h2>";
+$productoMouse = [
+    "id"     => 1,
+    "nombre" => "Mouse",
+    "precio" => 35000
+];
+$idBuscadoMouse = 1;
+
+if ($idBuscadoMouse === $productoMouse["id"]) {
+    http_response_code(200);
+    echo "<p>Producto encontrado - HTTP 200</p>";
+    echo "<pre>" . json_encode($productoMouse, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
+} else {
+    http_response_code(404);
+    echo "<p>Producto no encontrado - HTTP 404</p>";
+    echo "<pre>" . json_encode(["mensaje" => "Producto no encontrado"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
+}
+
+
+
+echo "<h2>6. Comprobación: Mouse no encontrado</h2>";
+$idBuscadoMouseNoExiste = 10;
+
+if ($idBuscadoMouseNoExiste === $productoMouse["id"]) {
+    http_response_code(200);
+    echo "<p>Producto encontrado - HTTP 200</p>";
+    echo "<pre>" . json_encode($productoMouse, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
+} else {
+    http_response_code(404);
+    echo "<p>Producto no encontrado - HTTP 404</p>";
+    echo "<pre>" . json_encode(["mensaje" => "Producto no encontrado"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
+}
+
+
+
+echo "<h2>7. Actividad 3: Consulta del producto Monitor</h2>";
+$productoMonitor = [
+    "id"     => 3,
+    "nombre" => "Monitor",
+    "precio" => 780000,
+    "stock"  => 6
+];
+$idBuscadoMonitor = 3;
+
+if ($idBuscadoMonitor === $productoMonitor["id"]) {
+    http_response_code(200);
+    echo "<p>Producto encontrado - HTTP 200</p>";
+    echo "<pre>" . json_encode($productoMonitor, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
+} else {
+    http_response_code(404);
+    echo "<p>Producto no encontrado - HTTP 404</p>";
+    echo "<pre>" . json_encode(["mensaje" => "El producto no existe"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
+}
+
+
+
+echo "<h2>8. Reto de comprobación: Monitor no encontrado</h2>";
+$idBuscadoMonitorNoExiste = 5;
+
+if ($idBuscadoMonitorNoExiste === $productoMonitor["id"]) {
+    http_response_code(200);
+    echo "<p>Producto encontrado - HTTP 200</p>";
+    echo "<pre>" . json_encode($productoMonitor, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
+} else {
+    http_response_code(404);
+    echo "<p>Producto no encontrado - HTTP 404</p>";
+    echo "<pre>" . json_encode(["mensaje" => "El producto no existe"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
+}
+
+?>

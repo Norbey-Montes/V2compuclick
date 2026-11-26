@@ -2,10 +2,13 @@
 
 $rutas = [
     'GET' => [
-        
+
         '/' => ['ComputadorController', 'listar'],
 
+        '/api/computador' => ['ComputadorController', 'listarJson'], 
+
         // Listar (GET all)
+        '/' => ['HomeController', 'index'],
         '/computadores' => ['ComputadorController', 'listar'],
         '/clientes'     => ['ClienteController', 'listar'],
         '/proveedores'  => ['ProveedorController', 'listar'],

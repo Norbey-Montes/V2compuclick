@@ -16,6 +16,17 @@ class ComputadorController
         require_once __DIR__ . '/../views/computadores/index.php';
     }
 
+    public function listarJson()
+    {
+        header("Content-Type: application/json; charset=utf-8");
+
+        $computadorModel = new Computador();
+
+        $computador = $computadorModel->getAll();
+
+        echo json_encode($computador, JSON_UNESCAPED_UNICODE);
+    }
+
     public function crear()
     {
         require_once __DIR__ . '/../views/computadores/crear.php';
